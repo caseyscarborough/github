@@ -1,5 +1,6 @@
 require 'httparty'
 require 'github/version'
+require 'github/error'
 require 'github/configuration'
 require 'github/client'
 
