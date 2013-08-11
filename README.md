@@ -1,6 +1,6 @@
 # GitHub API v3 Wrapper
 
-This is a simple wrapper for GitHub's v3 API. It is in the EARLY stages of development.
+This is a simple wrapper for GitHub's v3 API. It is in the EARLY stages of development. Knowing a little about [GitHub's API](http://developer.github.com/) will aid in its use.
 
 ## Installation
 
@@ -24,7 +24,7 @@ Then you can proceed to use it in the following manner:
 
 #### User
 
-Returns a OpenStruct (hash) containing information about a user.
+Returns a Hash containing information about a user.
 
 ```ruby
 user = GitHub.user('caseyscarborough')
@@ -42,7 +42,7 @@ Returns an array of events for a particular user.
 ```ruby
 events = GitHub.events('caseyscarborough')
 events.each do |e|
-  puts e['type']
+  puts e.type
 end
 ```
 
@@ -53,7 +53,7 @@ Returns an array of followers for a user.
 ```ruby
 followers = GitHub.followers('caseyscarborough')
 followers.each do |f|
-  puts f['login']
+  puts f.login
 end
 ```
 
@@ -65,11 +65,16 @@ Returns an array of repositories that belong to a user.
 repos = GitHub.repos('caseyscarborough')
 # => ...array of repositories
 repos.each do |r|
-  puts r['name']
+  puts r.name
 end
 ```
 
 More functionality to come.
+
+## To Do
+
+The better question is... What's not to do? Any functionality of the API listed at [developer.github.com](http://developer.github.com/) that isn't currently in effect.
+
 
 ## Contributing
 
