@@ -12,7 +12,11 @@ module GitHub
       Client.new.user(username)
     end
 
-    def followers(username)
+    def users
+      Client.new.users
+    end
+
+    def followers(username=nil)
       Client.new.followers(username)
     end
 
