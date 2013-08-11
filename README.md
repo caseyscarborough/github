@@ -28,6 +28,11 @@ $ gem install github-api-v3
 
 Then you can proceed to use it in the following manner:
 
+```ruby
+require 'github'
+# => true
+```
+
 #### User
 
 Returns a Hash containing information about a user.

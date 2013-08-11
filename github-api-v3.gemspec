@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['caseyscarborough@gmail.com']
   spec.description   = "A wrapper for GitHub's API v3."
   spec.summary       = "This gem is a wrapper that allows simple interaction with GitHub's API v3."
-  spec.homepage      = ''
+  spec.homepage      = 'https://github.com/caseyscarborough/github'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)
