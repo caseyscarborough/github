@@ -12,8 +12,16 @@ module GitHub
       Client.new.user(username)
     end
 
+    def followers(username)
+      Client.new.followers(username)
+    end
+
     def events(username)
       Client.new.events(username)
+    end
+
+    def repos(username)
+      Client.new.repos(username)
     end
 
   end

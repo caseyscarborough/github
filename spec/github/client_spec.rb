@@ -38,4 +38,23 @@ describe GitHub::Client do
     end
   end
 
+  describe 'followers' do
+    it 'should respond to followers method' do
+      GitHub.should respond_to :followers
+    end
+
+    it 'should return an array of users' do
+      GitHub.followers(user['login']).should be_instance_of Array
+    end
+  end
+
+  describe 'repositories' do
+    it 'should respond to repos method' do
+      GitHub.should respond_to :repos
+    end
+
+    it 'should return an array of repositories' do
+      GitHub.repos(user['login']).should be_instance_of Array
+    end
+  end
 end
