@@ -6,19 +6,22 @@ module GitHub
 
     def user(username)
       response = self.class.get "/users/#{username}"
-      OpenStruct.new response
+      response.parsed_response
     end
 
     def followers(username)
-      self.class.get "/users/#{username}/followers"
+      response = self.class.get "/users/#{username}/followers"
+      response.parsed_response
     end
 
     def events(username)
-      self.class.get "/users/#{username}/events"
+      response = self.class.get "/users/#{username}/events"
+      response.parsed_response
     end
 
     def repos(username)
-      self.class.get "/users/#{username}/repos"
+      response = self.class.get "/users/#{username}/repos"
+      response.parsed_response
     end
 
   end

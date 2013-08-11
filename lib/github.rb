@@ -1,5 +1,4 @@
 require 'httparty'
-require 'ostruct'
 require 'github/version'
 require 'github/configuration'
 require 'github/client'
