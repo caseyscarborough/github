@@ -4,32 +4,14 @@ This is a simple wrapper for GitHub's v3 API. It is in the EARLY stages of devel
 
 ## Installation
 
-As of right now, the library has not reached a version which I consider worth pushing to RubyGems.org. Feel free to clone the repository and build the gem and install it if you wish:
-
 ```bash
-$ git clone https://github.com/caseyscarborough/github && cd github
-$ gem build github-api-v3.gemspec
-$ gem install github-api-v3-0.0.1.gem
+$ gem install github_api_v3
 ```
 
 ## Usage
 
-Add the following line to your gemfile:
-
 ```ruby
-gem 'github-api-v3'
-```
-
-or install it manually:
-
-```bash
-$ gem install github-api-v3
-```
-
-Then you can proceed to use it in the following manner:
-
-```ruby
-require 'github'
+require 'github_api_v3'
 # => true
 ```
 

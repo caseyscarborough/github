@@ -1,10 +1,10 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'github/version'
+require 'github_api_v3/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'github-api-v3'
+  spec.name          = 'github_api_v3'
   spec.version       = GitHub::VERSION
   spec.authors       = ['Casey Scarborough']
   spec.email         = ['caseyscarborough@gmail.com']

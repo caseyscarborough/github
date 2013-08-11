@@ -48,6 +48,4 @@ describe GitHub::Client do
       GitHub.repos(user['login']).should be_instance_of Array
     end
   end
-
-  describe 'exceptions' do
 end

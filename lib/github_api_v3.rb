@@ -1,8 +1,8 @@
 require 'httparty'
-require 'github/version'
-require 'github/error'
-require 'github/configuration'
-require 'github/client'
+require 'github_api_v3/version'
+require 'github_api_v3/error'
+require 'github_api_v3/configuration'
+require 'github_api_v3/client'
 
 module GitHub
 
