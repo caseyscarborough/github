@@ -24,6 +24,8 @@ Then you can proceed to use it in the following manner:
 
 #### User
 
+Returns a OpenStruct (hash) containing information about a user.
+
 ```ruby
 user = GitHub.user('caseyscarborough')
 user.login
@@ -34,10 +36,36 @@ user.html_url
 ```
 
 #### Events
+
+Returns an array of events for a particular user.
+
 ```ruby
 events = GitHub.events('caseyscarborough')
 events.each do |e|
   puts e['type']
+end
+```
+
+#### Followers
+
+Returns an array of followers for a user.
+
+```ruby
+followers = GitHub.followers('caseyscarborough')
+followers.each do |f|
+  puts f['login']
+end
+```
+
+##### Repositories
+
+Returns an array of repositories that belong to a user.
+
+```ruby
+repos = GitHub.repos('caseyscarborough')
+# => ...array of repositories
+repos.each do |r|
+  puts r['name']
 end
 ```
 
