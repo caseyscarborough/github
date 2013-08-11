@@ -20,6 +20,12 @@ Add the following line to your gemfile:
 gem 'github-api-v3'
 ```
 
+or install it manually:
+
+```bash
+$ gem install github-api-v3
+```
+
 Then you can proceed to use it in the following manner:
 
 #### User
@@ -28,12 +34,13 @@ Returns a Hash containing information about a user.
 
 ```ruby
 user = GitHub.user('caseyscarborough')
-user.login
-# => "caseyscarborough"
-user.html_url
-# => "https://github.com/caseyscarborough"
-# ...etc
+user.login     # => "caseyscarborough"
+user.name      # => "Casey Scarborough"
+user.html_url  # => "https://github.com/caseyscarborough"
+user.following # => 23
+# etc...
 ```
+You can find the available attributes [here](http://developer.github.com/v3/users/#get-a-single-user).
 
 #### Events
 
@@ -41,9 +48,7 @@ Returns an array of events for a particular user.
 
 ```ruby
 events = GitHub.events('caseyscarborough')
-events.each do |e|
-  puts e.type
-end
+events.each { |e| puts e.type }
 ```
 
 #### Followers
@@ -52,21 +57,25 @@ Returns an array of followers for a user.
 
 ```ruby
 followers = GitHub.followers('caseyscarborough')
-followers.each do |f|
-  puts f.login
-end
+followers.each { |f| puts f.login }
 ```
 
-##### Repositories
+#### Repositories
 
 Returns an array of repositories that belong to a user.
 
 ```ruby
 repos = GitHub.repos('caseyscarborough')
-# => ...array of repositories
-repos.each do |r|
-  puts r.name
-end
+repos.each { |r| puts r.name }
+```
+
+### Authenticated Requests
+
+Some methods, such as retrieving private repos or emails, require authentication. To create one of these requests, you'll need to pass in your login and access token. You can create a personal access token on your [account page](https://github.com/settings/applications).
+
+```ruby
+client = GitHub::Client.new(login: 'username', access_token: 'abcdefghijklmnopqrstuvwxyz12345')
+client.emails # => ["email@example.com", "email2@example.com"]
 ```
 
 More functionality to come.
