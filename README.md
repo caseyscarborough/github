@@ -69,6 +69,9 @@ Some methods, such as retrieving private repos or emails, require authentication
 ```ruby
 client = GitHub::Client.new(login: 'username', access_token: 'abcdefghijklmnopqrstuvwxyz12345')
 client.emails # => ["email@example.com", "email2@example.com"]
+client.repos  # => #<Array:0x007fb8aa0d1a00>
+client.follow('matz') # => true
+client.user   # => #<Hash:0x007fb8a9109d70>
 ```
 
 More functionality to come.
