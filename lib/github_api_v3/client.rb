@@ -1,3 +1,4 @@
+require 'json'
 require 'github_api_v3/client/users'
 require 'github_api_v3/client/repos'
 
@@ -35,8 +36,8 @@ module GitHub
         response.parsed_response
       end
 
-      def post(url, params={})
-        response = self.class.post url, query: params
+      def post(url, params={}, body={})
+        response = self.class.post url, query: params, body: body.to_json
         handle_response(response)
         response.parsed_response
       end

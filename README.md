@@ -80,9 +80,6 @@ More functionality to come.
 
 The better question is... What's not to do? Any functionality of the API listed at [developer.github.com](http://developer.github.com/) that isn't currently in effect.
 
-I can't quite figure out the scopes when making requests to the API. This leaves certain functionality unimplemented such as creating repositories and deleting repositories. This is something I'm actively working on, and would happily accept a pull request if anyone knows how to resolve the issue.
-
-
 ## Contributing
 
 1. Fork it

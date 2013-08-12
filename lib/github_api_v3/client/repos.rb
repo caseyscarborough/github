@@ -19,6 +19,14 @@ module GitHub
         end
       end
 
+      def create_repo(name, options = {})
+        post "/user/repos", auth_params, options.merge(name: name)
+      end
+
+      # def delete_repo(owner, repo)
+      #   delete "/repos/#{owner}/#{repo}", auth_params
+      # end
+
       def org_repos(org)
         get "/orgs/#{org}/repos"
       end
