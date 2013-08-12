@@ -6,10 +6,13 @@ describe GitHub::Client do
 
   subject { GitHub }
 
+  it { should respond_to :login }
+  it { should respond_to :access_token }
   it { should respond_to :user }
   it { should respond_to :events }
   it { should respond_to :followers }
   it { should respond_to :repos }
+  it { should respond_to :emails }
 
   describe 'default attributes' do
     it 'must include httparty' do

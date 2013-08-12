@@ -8,24 +8,15 @@ module GitHub
 
   class << self
     
-    def user(username)
-      Client.new.user(username)
+    def client
+      @client = Client.new unless @client
+      @client
     end
 
-    def users
-      Client.new.users
-    end
+  private 
 
-    def followers(username=nil)
-      Client.new.followers(username)
-    end
-
-    def events(username)
-      Client.new.events(username)
-    end
-
-    def repos(username)
-      Client.new.repos(username)
+    def method_missing(method_name, *args, &block)
+      client.send(method_name, *args, &block)
     end
 
   end

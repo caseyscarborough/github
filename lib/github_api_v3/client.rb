@@ -6,30 +6,74 @@ module GitHub
 
     attr_reader :login, :access_token
 
-    def initialize(login=nil, access_token=nil)
-      @login = login
-      @access_token = access_token
+    def initialize(options={})
+      @login = options[:login]
+      @access_token = options[:access_token]
     end
 
-    def user(username)
-      get "/users/#{username}"
+    # Users
+
+    def user(username=nil)
+      if username
+        get "/users/#{username}"
+      else
+        get '/user', auth_params
+      end
     end
 
     def users
-      get "/users"
+      get '/users'
     end
 
     # Get emails for authenticated user
     def emails
-      get "/user/emails", auth_params
+      get '/user/emails', auth_params
     end
 
-    def followers(username)
-      get "/users/#{username}/followers"
+    def follow(username)
+      put "/user/following/#{username}", auth_params
+    end
+
+    def follows?(username, target_username)
+      response = self.class.get "/users/#{username}/following/#{target_username}"
+      response.code == 204
+    end
+
+    def followers(username=nil)
+      if username
+        get "/users/#{username}/followers"
+      else
+        get '/user/followers', auth_params
+      end
     end
 
     def following(username)
       get "/users/#{username}/following"
+    end
+
+    def following?(username)
+      response = self.class.get "/user/following/#{username}", query: auth_params
+      response.code == 204
+    end
+
+    def unfollow(username)
+      delete "/user/following/#{username}", auth_params
+    end
+
+    def keys(username=nil)
+      if username
+        get "/users/#{username}/keys"
+      else
+        get '/user/keys', auth_params
+      end
+    end
+
+    def key(id)
+      get "/user/keys/#{id}", auth_params
+    end
+
+    def delete_key(id)
+      delete "/user/keys/#{id}", auth_params
     end
 
     def events(username)
@@ -44,6 +88,23 @@ module GitHub
 
       def get(url, params={})
         response = self.class.get url, query: params
+        handle_response(response)
+        response.parsed_response
+      end
+
+      def put(url, params={})
+        response = self.class.put url, query: params
+        handle_response(response)
+        response.parsed_response
+      end
+
+      def post(url, params={})
+        response = self.class.post url, query: params
+        response.code
+      end
+
+      def delete(url, params={})
+        response = self.class.delete url, query: params
         handle_response(response)
         response.parsed_response
       end

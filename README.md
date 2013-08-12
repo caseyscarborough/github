@@ -1,4 +1,4 @@
-# GitHub API v3 Wrapper
+# GitHub API v3
 
 [![Gem Version](https://badge.fury.io/rb/github_api_v3.png)](http://badge.fury.io/rb/github_api_v3)
 
@@ -16,6 +16,10 @@ $ gem install github_api_v3
 require 'github_api_v3'
 # => true
 ```
+
+### Unauthenticated Requests
+
+There are multiple different unauthenticated requests to the API. Examples are shown below.
 
 #### User
 
