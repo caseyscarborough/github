@@ -1,8 +1,14 @@
+require 'github_api_v3/client/users'
+require 'github_api_v3/client/repos'
+
 module GitHub
   class Client
 
     include HTTParty
     base_uri Configuration::DEFAULT_ENDPOINT
+
+    include GitHub::Client::Users
+    include GitHub::Client::Repos
 
     attr_reader :login, :access_token
 
@@ -11,119 +17,9 @@ module GitHub
       @access_token = options[:access_token]
     end
 
-    # Users
-
-    def user(username=nil)
-      if username
-        get "/users/#{username}"
-      else
-        get '/user', auth_params
-      end
-    end
-
-    def users
-      get '/users'
-    end
-
-    # Get emails for authenticated user
-    def emails
-      get '/user/emails', auth_params
-    end
-
-    def follow(username)
-      put "/user/following/#{username}", auth_params
-    end
-
-    def follows?(username, target_username)
-      response = self.class.get "/users/#{username}/following/#{target_username}"
-      response.code == 204
-    end
-
-    def followers(username=nil)
-      if username
-        get "/users/#{username}/followers"
-      else
-        get '/user/followers', auth_params
-      end
-    end
-
-    def following(username)
-      get "/users/#{username}/following"
-    end
-
-    def following?(username)
-      response = self.class.get "/user/following/#{username}", query: auth_params
-      response.code == 204
-    end
-
-    def unfollow(username)
-      delete "/user/following/#{username}", auth_params
-    end
-
-    def keys(username=nil)
-      if username
-        get "/users/#{username}/keys"
-      else
-        get '/user/keys', auth_params
-      end
-    end
-
-    def key(id)
-      get "/user/keys/#{id}", auth_params
-    end
-
-    def delete_key(id)
-      delete "/user/keys/#{id}", auth_params
-    end
-
     def events(username)
       get "/users/#{username}/events"
     end
-
-    def all_repos
-      get '/repositories'
-    end
-
-    def repo(owner, repo)
-      get "/repos/#{owner}/#{repo}"
-    end
-
-    def repos(username=nil)
-      if username
-        get "/users/#{username}/repos"
-      else
-        get '/user/repos', auth_params
-      end
-    end
-
-    def org_repos(org)
-      get "/orgs/#{org}/repos"
-    end
-
-    def contributors(owner, repo)
-      get "/repos/#{owner}/#{repo}/contributors"
-    end
-
-    def languages(owner, repo)
-      get "/repos/#{owner}/#{repo}/languages"
-    end
-
-    def teams(owner, repo)
-      get "/repos/#{owner}/#{repo}/teams"
-    end
-
-    def tags(owner, repo)
-      get "/repos/#{owner}/#{repo}/tags"
-    end
-
-    def branches(owner, repo)
-      get "/repos/#{owner}/#{repo}/branches"
-    end
-
-    def branch(owner, repo, branch)
-      get "/repos/#{owner}/#{repo}/branches/#{branch}"
-    end
-
 
     private
 
