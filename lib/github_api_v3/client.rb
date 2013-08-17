@@ -18,10 +18,6 @@ module GitHub
       @access_token = options[:access_token]
     end
 
-    def events(username)
-      get "/users/#{username}/events"
-    end
-
     private
 
       def get(url, params={})

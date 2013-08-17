@@ -168,6 +168,10 @@
       def delete_key(id)
         delete "/user/keys/#{id}", auth_params, true
       end
+      
+      def events(username)
+        get "/users/#{username}/events"
+      end
     end
   
   end
