@@ -30,10 +30,11 @@ module GitHub
         response.parsed_response
       end
 
-      def put(url, params={})
+      def put(url, params={}, boolean=false)
         response = self.class.put url, query: params
         handle_response(response)
         response.parsed_response
+        response.code == 204 if boolean
       end
 
       def post(url, params={}, body={})
@@ -42,10 +43,11 @@ module GitHub
         response.parsed_response
       end
 
-      def delete(url, params={})
+      def delete(url, params={}, boolean=false)
         response = self.class.delete url, query: params
         handle_response(response)
         response.parsed_response
+        response.code == 204 if boolean
       end
 
       def auth_params
