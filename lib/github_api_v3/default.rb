@@ -1,8 +1,6 @@
 module GitHub
-  module Configuration
-
-    DEFAULT_ENDPOINT = "https://api.github.com".freeze
-
+  module Default
+    API_ENDPOINT = "https://api.github.com".freeze
   end
 end
 

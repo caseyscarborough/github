@@ -6,7 +6,7 @@ module GitHub
   class Client
 
     include HTTParty
-    base_uri Configuration::DEFAULT_ENDPOINT
+    base_uri Default::API_ENDPOINT
 
     include GitHub::Client::Users
     include GitHub::Client::Repos

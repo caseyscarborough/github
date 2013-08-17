@@ -1,7 +1,7 @@
 require 'httparty'
 require 'github_api_v3/version'
 require 'github_api_v3/error'
-require 'github_api_v3/configuration'
+require 'github_api_v3/default'
 require 'github_api_v3/client'
 
 module GitHub
