@@ -59,8 +59,8 @@ module GitHub
       # Perform a put request.
       #
       # @return [Hash, Array, String]
-      def put(url, params={})
-        response = self.class.put url, query: params
+      def put(url, params={}, body={})
+        response = self.class.put url, query: params, body: body.to_json
         handle_response(response)
         response.parsed_response
       end
@@ -68,8 +68,8 @@ module GitHub
       # Perform a put request with boolean return type.
       #
       # @return [Boolean]
-      def boolean_put(url, params={})
-        response = self.class.put url, query: params
+      def boolean_put(url, params={}, body={})
+        response = self.class.put url, query: params, body: body.to_json
         response.code == 204
       rescue GitHub::NotFound
         false

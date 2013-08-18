@@ -269,6 +269,59 @@ module GitHub
         boolean_delete "/user/starred/#{owner}/#{repo}", auth_params
       end
 
+      # List Watchers for a repository.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name.
+      # @return [Array] List of users.
+      # @see http://developer.github.com/v3/activity/watching/#list-watchers
+      def watchers(owner, repo)
+        get "/repos/#{owner}/#{repo}/subscribers", auth_params
+      end
+
+      # Get subscription information.
+      #
+      # Requires authentication.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name.
+      # @return [Hash] Subscription information.
+      # @see http://developer.github.com/v3/activity/watching/#get-a-repository-subscription
+      # @example
+      #   client.subscription('caseyscarborough','github')
+      def subscription(owner, repo)
+        get "/repos/#{owner}/#{repo}/subscription", auth_params
+      end
+
+      # Set a repository subscription.
+      # 
+      # Requires authentication.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name.
+      # @return [Hash] Subscription information.
+      # @see http://developer.github.com/v3/activity/watching/#set-a-repository-subscription
+      # @example
+      #   client.subscribe('caseyscarborough','github')
+      def subscribe(owner, repo, options={})
+        options[:subscribed] = true unless options[:subscribed]
+        options[:ignored] = false unless options[:ignored]
+        put "/repos/#{owner}/#{repo}/subscription", auth_params, options
+      end
+
+      # Delete a repository subscription.
+      #
+      # Requires authentication.
+      #
+      # @param repo [String] Repository name.
+      # @return [Hash] Subscription information.
+      # @see http://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
+      # @example
+      #   client.unsubscribe('caseyscarborough','github')
+      def unsubscribe(owner, repo)
+        boolean_delete "/repos/#{owner}/#{repo}/subscription", auth_params
+      end
+      
     end
   end
 end

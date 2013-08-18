@@ -143,4 +143,18 @@ describe GitHub::Client::Users do
     end
   end
 
+  describe '.watching', :vcr do
+    it 'returns an unauthenticated users repos' do
+      GitHub.watching('caseyscarborough').should be_instance_of Array
+    end
+
+    it 'returns an authenticated users repos' do
+      test_client.watching.should be_instance_of Array
+    end
+
+    it 'returns a 404 for not found' do
+      expect { GitHub.watching('098f6bcd4621d373cade4e832627b4f6') }.to raise_error GitHub::NotFound
+    end
+  end
+
 end

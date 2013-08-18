@@ -177,4 +177,29 @@ describe GitHub::Client::Repos do
     end
   end
 
+  describe '.watchers', :vcr do
+    it 'returns a list of watchers' do
+      GitHub.watchers('caseyscarborough','github').should be_instance_of Array
+    end
+  end
+
+  describe '.subscribe', :vcr do
+    it 'subscribes to a repository' do
+      test_client.subscribe('caseyscarborough','github').should be_instance_of Hash
+    end
+  end
+
+  describe '.subscription', :vcr do
+    before { test_client.subscribe('caseyscarborough','github') }
+    it 'returns subscription information' do
+      test_client.subscription('caseyscarborough','github').should be_instance_of Hash
+    end
+  end
+
+  describe '.unsubscribe', :vcr do
+    it 'unsubscribes to a repository' do
+      test_client.unsubscribe('caseyscarborough','github').should be_true
+    end
+  end
+
 end

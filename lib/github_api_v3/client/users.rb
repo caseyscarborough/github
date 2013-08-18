@@ -217,7 +217,6 @@
         end
       end
 
-
       # Check if you are starring a repository.
       #
       # Requires authentication.
@@ -232,6 +231,23 @@
         boolean_get "/user/starred/#{owner}/#{repo}", auth_params
       end
 
+      # List repositories a user is watching.
+      #
+      # @param username [String] The target user's usernmae.
+      # @return [Array]
+      # @see http://developer.github.com/v3/activity/watching/#list-repositories-being-watched
+      # @example
+      #   GitHub.watching('caseyscarborough')
+      # @example
+      #   client.watching
+      def watching(username=nil)
+        if username
+          get "/users/#{username}/subscriptions"
+        else
+          get "/user/subscriptions", auth_params
+        end
+      end
+      
     end
   
   end
