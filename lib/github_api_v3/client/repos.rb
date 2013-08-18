@@ -1,6 +1,9 @@
 module GitHub
   class Client
 
+    # Contains methods for the Repos API.
+    #
+    # @see http://developer.github.com/v3/repos/
     module Repos
       
       # List all repositories

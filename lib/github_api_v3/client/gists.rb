@@ -1,6 +1,9 @@
 module GitHub
   class Client
 
+    # Contains methods for the Gists API.
+    #
+    # @see http://developer.github.com/v3/gists/
     module Gists
       
       # List gists.
