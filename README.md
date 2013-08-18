@@ -4,7 +4,13 @@
 
 This is a simple wrapper for GitHub's v3 API. It is in the EARLY stages of development. Knowing a little about [GitHub's API](http://developer.github.com/) will aid in its use.
 
+## Documentation
+
+Full documentation for the gem can be found at [rdoc.info/gems/github_api_v3/frames/index](http://rdoc.info/gems/github_api_v3/frames/index).
+
 ## Installation
+
+To install the gem, issue the following command:
 
 ```bash
 $ gem install github_api_v3
@@ -14,53 +20,12 @@ $ gem install github_api_v3
 
 ```ruby
 require 'github_api_v3'
-# => true
 ```
 
 ### Unauthenticated Requests
 
-There are multiple different unauthenticated requests to the API. Examples are shown below.
+There are multiple different unauthenticated requests to the API. These are performed when no credentials are given, and usually start with `GitHub`.
 
-#### User
-
-Returns a Hash containing information about a user.
-
-```ruby
-user = GitHub.user('caseyscarborough')
-user.login     # => "caseyscarborough"
-user.name      # => "Casey Scarborough"
-user.html_url  # => "https://github.com/caseyscarborough"
-user.following # => 23
-# etc...
-```
-You can find the available attributes [here](http://developer.github.com/v3/users/#get-a-single-user).
-
-#### Events
-
-Returns an array of events for a particular user.
-
-```ruby
-events = GitHub.events('caseyscarborough')
-events.each { |e| puts e.type }
-```
-
-#### Followers
-
-Returns an array of followers for a user.
-
-```ruby
-followers = GitHub.followers('caseyscarborough')
-followers.each { |f| puts f.login }
-```
-
-#### Repositories
-
-Returns an array of repositories that belong to a user.
-
-```ruby
-repos = GitHub.repos('caseyscarborough')
-repos.each { |r| puts r.name }
-```
 
 ### Authenticated Requests
 
@@ -74,11 +39,149 @@ client.follow('matz') # => true
 client.user   # => #<Hash:0x007fb8a9109d70>
 ```
 
-More functionality to come.
+Anytime a method is shown below starting with `client`, it is an authenticated method.
+
+### Sample usage
+
+#### Users
+
+The following are some sample usages of the Users module.
+
+```ruby
+# Retrieve a single user
+user = GitHub.user('caseyscarborough')
+user.login     # => "caseyscarborough"
+user.name      # => "Casey Scarborough"
+user.html_url  # => "https://github.com/caseyscarborough"
+user.following # => 23
+
+# Retrieve an array of all GitHub users
+GitHub.users
+
+# Get emails for authenticated user
+client.emails
+
+# Follow/unfollow a user
+client.follow('caseyscarborough')
+client.unfollow('caseyscarborough')
+
+# Check if a user follows another user
+GitHub.follows?('caseyscarborough','matz')
+
+# Get a list of an unauthenticated user's followers
+GitHub.followers('caseyscarborough')
+
+# Get a list of an authenticated user's followers
+client.followers
+
+# Get a list of user's a user is following
+GitHub.following('caseyscarborough')
+
+# See if authenticated user is following another user
+client.following?('caseyscarborough')
+
+# Get events for a user
+GitHub.events('caseyscarborough')
+
+# etc...
+```
+You can find the available attributes [here](http://developer.github.com/v3/users/#get-a-single-user). Check the [Users documentation](http://rdoc.info/gems/github_api_v3/GitHub/Client/Users) for the gem for a complete list and more examples.
+
+#### Repositories
+
+The following are some sample usages for the Repos module.
+
+```ruby
+# Get repos for an unauthenticated/authenticated user
+GitHub.repos('caseyscarborough')
+client.repos
+
+# Get all public repos on GitHub
+GitHub.all_repos
+
+# Get a specific repo
+GitHub.repo('owner','repo-name')
+
+# Create a repo
+client.create_repo('new-repo', description: 'New repository.', private: true)
+
+# Delete a repo
+client.delete_repo('repo-name')
+
+# Get a repository's contributors/languages/tags/branches/collaborators
+GitHub.contributors('caseyscarborough','github')
+GitHub.languages('caseyscarborough','github')
+GitHub.tags('caseyscarborough','github')
+GitHub.branches('caseyscarborough','github')
+GitHub.collaborators('caseyscarborough','github')
+
+# Get a specific branch
+GitHub.branch('caseyscarborough','github','master')
+
+# Add/remove collaborator
+client.add_collaborator('owner','repo-name','user-to-add')
+client.remove_collaborator('owner','repo-name','user-to-remove')
+```
+For a full list with descriptions, see the [Repos documentation](http://rdoc.info/gems/github_api_v3/GitHub/Client/Repos) for the gem.
+
+#### Gists
+
+The following are sample uses for the Gists module.
+
+```ruby
+# Get all gists for a user
+GitHub.gists('caseyscarborough')
+
+# Get all gists for authenticated user
+client.gists
+
+# Get all public gists
+GitHub.gists
+
+# Get a gist by id
+GitHub.gist(1234567)
+
+# Create a gist
+client.create_gist(
+  files: {"file1.txt" => { content: "File contents" }}, 
+  description: "Gist description", 
+  public: "false"
+)
+
+# Check if a gist is starred
+client.gist_starred?(1234567)
+
+# Star/unstar/fork/delete a gist
+client.star_gist(1234567)
+client.unstar_gist(1234567)
+client.fork_gist(1234567)
+client.delete_gist(1234567)
+```
+Check out the [Gist documentation](http://rdoc.info/gems/github_api_v3/GitHub/Client/Gists) for more information.
+
+## Running the Test Suite
+
+The test suite can be run by issuing the following command from the root of the directory:
+
+```bash
+$ rspec spec/
+```
 
 ## To Do
 
 The better question is... What's not to do? Any functionality of the API listed at [developer.github.com](http://developer.github.com/) that isn't currently in effect.
+
+Some main missing functionality:
+* A good bit of the [Repos API](http://developer.github.com/v3/repos/), such as:
+  * Comments
+  * Commits
+  * Hooks
+  * Forks
+  * etc.
+* Markdown
+* Editing Gists
+* Editing Repos
+* Updating User keys
 
 ## Contributing
 
