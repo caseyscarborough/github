@@ -135,7 +135,7 @@ module GitHub
       #
       # @param owner [String] Owner of repository.
       # @param repo [String] Repository name.
-      # @return [Array] List of brances and their information. 
+      # @return [Array] List of branches and their information. 
       # @see http://developer.github.com/v3/repos/#list-branches
       # @example
       #   GitHub.branches('caseyscarborough','github')
