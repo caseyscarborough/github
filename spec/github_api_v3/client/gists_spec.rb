@@ -80,4 +80,67 @@ describe GitHub::Client::Gists do
     end
   end
 
+  describe '.gist_comments', :vcr do
+    it 'returns a list of comments' do
+      GitHub.gist_comments(5928712).should be_instance_of Array
+    end
+
+    it 'returns a 404 when not found' do
+      expect { GitHub.gist_comments(9999999) }.to raise_error GitHub::NotFound
+    end
+  end
+
+  describe '.gist_comment', :vcr do
+    it 'returns a comment' do
+      GitHub.gist_comment(5928712, 856638).should be_instance_of Hash
+    end
+
+    it 'returns a 404 when not found' do
+      expect { GitHub.gist_comment(5928712, 856639) }.to raise_error GitHub::NotFound
+    end
+  end
+
+  comment_id = ""
+  describe '.create_gist_comment', :vcr do
+    it 'returns comment information after creation' do
+      comment = test_client.create_gist_comment(5928712, 'Awesome!')
+      comment_id = comment.id
+      comment.should be_instance_of Hash
+    end
+
+    it 'creates the comment' do
+      GitHub.gist_comment(5928712, comment_id).should be_instance_of Hash
+    end
+  end
+
+  describe '.edit_gist_comment', :vcr do
+    it 'returns comment information after editing' do
+      test_client.edit_gist_comment(5928712, comment_id, 'Even more awesome!').should be_instance_of Hash
+    end
+
+    it 'edits the comment' do
+      GitHub.gist_comment(5928712, comment_id).body == 'Even more awesome!'
+    end
+  end
+
+  describe '.delete_gist_comment', :vcr do
+    it 'returns true or false' do
+      [true,false].should include test_client.delete_gist_comment(5928712, comment_id)
+    end
+
+    it 'deletes the comment' do
+      expect { GitHub.gist_comment(5928712, comment_id) }.to raise_error GitHub::NotFound
+    end
+  end
+
+
+
+
+
+
+
+
+
+
+
 end

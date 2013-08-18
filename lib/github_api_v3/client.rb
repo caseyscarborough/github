@@ -3,6 +3,7 @@ require 'github_api_v3/client/users'
 require 'github_api_v3/client/repos'
 require 'github_api_v3/client/gists'
 require 'github_api_v3/client/markdown'
+require 'github_api_v3/client/gitignore'
 
 module GitHub
   class Client
@@ -14,6 +15,7 @@ module GitHub
     include GitHub::Client::Repos
     include GitHub::Client::Gists
     include GitHub::Client::Markdown
+    include GitHub::Client::Gitignore
 
     attr_reader :login, :access_token
 

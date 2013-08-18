@@ -116,6 +116,73 @@ module GitHub
       def delete_gist(id)
         boolean_delete "/gists/#{id}", auth_params
       end
+
+      # List comments on a gist.
+      #
+      # @param id [Integer] The Gist ID.
+      # @return [Array] An array of comments.
+      # @see http://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
+      # @example
+      #   GitHub.gist_comments(5928712)
+      def gist_comments(id)
+        get "/gists/#{id}/comments"
+      end
+
+      # Get a single comment on a gist.
+      #
+      # @param id [Integer] The Gist ID.
+      # @param comment_id [Integer] The comment ID.
+      # @return [Hash] The comment data.
+      # @see http://developer.github.com/v3/gists/comments/#get-a-single-comment
+      # @example
+      #   GitHub.gist_comment(5928712, 889239)
+      def gist_comment(id, comment_id)
+        get "/gists/#{id}/comments/#{comment_id}"
+      end
+
+      # Create a gist comment.
+      #
+      # Requires authentication.
+      #
+      # @param id [Integer] The Gist ID.
+      # @param comment [String] The comment text.
+      # @return [Hash] The Gist information.
+      # @see http://developer.github.com/v3/gists/comments/#create-a-comment
+      # @example
+      #   client.create_gist_comment(5928712, 'Awesome!')
+      def create_gist_comment(id, comment)
+        post "/gists/#{id}/comments", auth_params, { body: comment }
+      end
+
+      # Edit an existing gist comment.
+      #
+      # Requires authentication.
+      #
+      # @param id [Integer] The Gist ID.
+      # @param comment_id [Integer] The ID of the comment to edit.
+      # @param comment [String] The comment text.
+      # @return [Hash] The Gist information.
+      # @see http://developer.github.com/v3/gists/comments/#edit-a-comment
+      # @example
+      #   client.edit_gist_comment(5928712, 889239, 'Even more awesome!')
+      def edit_gist_comment(id, comment_id, comment)
+        patch "/gists/#{id}/comments/#{comment_id}", auth_params, { body: comment }
+      end
+
+      # Delete a gist comment.
+      #
+      # Requires authentication.
+      #
+      # @param id [Integer] The Gist ID.
+      # @param comment_id [Integer] The ID of the comment to delete.
+      # @return [Boolean] True if successful, false if not.
+      # @see http://developer.github.com/v3/gists/comments/#delete-a-comment
+      # @example
+      #   client.delete_gist_comment(5928712, 889239)
+      def delete_gist_comment(id, comment_id)
+        boolean_delete "/gists/#{id}/comments/#{comment_id}", auth_params
+      end
+      
     end
 
   end
