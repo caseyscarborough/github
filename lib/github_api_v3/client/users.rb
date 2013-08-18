@@ -54,7 +54,7 @@
       # @example
       #   client.follow('caseyscarborough')
       def follow(username)
-        put "/user/following/#{username}", auth_params, true
+        boolean_put "/user/following/#{username}", auth_params
       end
 
       # Checks to see if a user is following another user.
@@ -124,7 +124,7 @@
       # @example
       #   client.unfollow('matz')
       def unfollow(username)
-        delete "/user/following/#{username}", auth_params, true
+        boolean_delete "/user/following/#{username}", auth_params
       end
 
       # Get a list of public keys for a user.
@@ -166,7 +166,7 @@
       # @example
       #   client.delete_key(123)
       def delete_key(id)
-        delete "/user/keys/#{id}", auth_params, true
+        boolean_delete "/user/keys/#{id}", auth_params
       end
       
       def events(username)

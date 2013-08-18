@@ -77,7 +77,7 @@ module GitHub
       # @example
       #   client.delete_repo('repo-name')
       def delete_repo(owner, repo)
-        delete "/repos/#{owner}/#{repo}", auth_params, true
+        boolean_delete "/repos/#{owner}/#{repo}", auth_params
       end
 
       # Get organization repositories.
@@ -177,7 +177,7 @@ module GitHub
       # @example
       #   GitHub.collaborator?('caseyscarborough','github','caseyscarborough')
       def collaborator?(owner, repo, user)
-        get "/repos/#{owner}/#{repo}/collaborators/#{user}", {}, true
+        boolean_get "/repos/#{owner}/#{repo}/collaborators/#{user}"
       end
 
       # Add a collaborator to a repository.
@@ -189,7 +189,7 @@ module GitHub
       # @param user [String] User to add.
       # @see http://developer.github.com/v3/repos/collaborators/#add-collaborator
       def add_collaborator(owner, repo, user)
-        put "/repos/#{owner}/#{repo}/collaborators/#{user}", auth_params, true
+        boolean_put "/repos/#{owner}/#{repo}/collaborators/#{user}", auth_params
       end
 
       # Remove a collaborator from a repository.
@@ -201,7 +201,7 @@ module GitHub
       # @param user [String] User to remove.
       # @see http://developer.github.com/v3/repos/collaborators/#remove-collaborator
       def remove_collaborator(owner, repo, user)
-        delete "/repos/#{owner}/#{repo}/collaborators/#{user}", auth_params, true
+        boolean_delete "/repos/#{owner}/#{repo}/collaborators/#{user}", auth_params
       end
 
     end

@@ -60,7 +60,7 @@ module GitHub
       # @return [Boolean] True if it is starred, false if not.
       # @see http://developer.github.com/v3/gists/#check-if-a-gist-is-starred
       def gist_starred?(id)
-        get "/gists/#{id}/star", auth_params, true
+        boolean_get "/gists/#{id}/star", auth_params
       end
 
       # Star a gist.
@@ -73,7 +73,7 @@ module GitHub
       # @example
       #   client.star_gist(5928712)
       def star_gist(id)
-        put "/gists/#{id}/star", auth_params, true
+        boolean_put "/gists/#{id}/star", auth_params
       end
 
       # Unstar a gist.
@@ -86,7 +86,7 @@ module GitHub
       # @example
       #   client.unstar_gist(5928712)
       def unstar_gist(id)
-        delete "/gists/#{id}/star", auth_params, true
+        boolean_delete "/gists/#{id}/star", auth_params
       end
 
       # Fork a gist.
@@ -99,7 +99,7 @@ module GitHub
       # @example
       #   client.fork_gist(5928712)
       def fork_gist(id)
-        post "/gists/#{id}/fork", auth_params, {}, true
+        boolean_post "/gists/#{id}/fork", auth_params, {}
       end
 
       # Delete a gist.
@@ -111,7 +111,7 @@ module GitHub
       # @example
       #   client.delete_gist(5928712)
       def delete_gist(id)
-        delete "/gists/#{id}", auth_params, true
+        boolean_delete "/gists/#{id}", auth_params
       end
     end
 

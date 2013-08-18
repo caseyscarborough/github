@@ -23,28 +23,56 @@ module GitHub
 
     private
 
-      def get(url, params={}, boolean=false)
+      def get(url, params={})
         response = self.class.get url, query: params
         handle_response(response)
-        boolean ? response.code == 204 : response.parsed_response
+        response.parsed_response
       end
 
-      def put(url, params={}, boolean=false)
+      def boolean_get(url, params={})
+        response = self.class.get url, query: params
+        response.code == 204
+      rescue GitHub::NotFound
+        false
+      end
+
+      def put(url, params={})
         response = self.class.put url, query: params
         handle_response(response)
-        boolean ? response.code == 204 : response.parsed_response
+        response.parsed_response
       end
 
-      def post(url, params={}, body={}, boolean=false)
+      def boolean_put(url, params={})
+        response = self.class.put url, query: params
+        response.code == 204
+      rescue GitHub::NotFound
+        false
+      end
+
+      def post(url, params={}, body={})
         response = self.class.post url, query: params, body: body.to_json
         handle_response(response)
-        boolean ? response.code == 204 : response.parsed_response
+        response.parsed_response
       end
 
-      def delete(url, params={}, boolean=false)
+      def boolean_post(url, params={}, body={})
+        response = self.class.post url, query: params, body: body.to_json
+        response.code == 204
+      rescue GitHub::NotFound
+        false
+      end
+
+      def delete(url, params={})
         response = self.class.delete url, query: params
         handle_response(response)
-        boolean ? response.code == 204 : response.parsed_response
+        response.parsed_response
+      end
+
+      def boolean_delete(url, params={})
+        response = self.class.delete url, query: params
+        response.code == 204
+      rescue GitHub::NotFound
+        false
       end
 
       def basic_params
