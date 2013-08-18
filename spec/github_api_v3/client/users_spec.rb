@@ -129,6 +129,18 @@ describe GitHub::Client::Users do
     end
   end
 
+  describe '.notifications', :vcr do
+    it 'returns an array of notifications' do
+      test_client.notifications.should be_instance_of Array
+    end
+  end
+
+  describe '.repo_notifications', :vcr do
+    it 'returns an array of notifications' do
+      test_client.repo_notifications('caseyscarborough','github').should be_instance_of Array
+    end
+  end
+
   describe '.starring', :vcr do
     it 'returns an unauthenticated users repos' do
       GitHub.starring('caseyscarborough').should be_instance_of Array

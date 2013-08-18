@@ -198,6 +198,40 @@
         boolean_delete "/user/keys/#{id}", auth_params
       end
 
+      # List notifications.
+      #
+      # Requires authentication.
+      #
+      # @param options [Hash] Optional parameters.
+      # @option options [Boolean] :all Show notifications marked as read.
+      # @option options [Boolean] :participating Show only notifications that the user is participating in or mentioned in.
+      # @option options [String] :time Only show notifications since a given time. Should be in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ), such as: “2012-10-09T23:39:01Z”.
+      # @return [Array] List of notifications.
+      # @see http://developer.github.com/v3/activity/notifications/#list-your-notifications
+      # @example
+      #   client.notifications
+      def notifications(options={})
+        get "/notifications", auth_params.merge(options)
+      end
+
+      # List notifications for a repository.
+      #
+      # Requires authentication.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name.
+      # @param options [Hash] Optional parameters.
+      # @option options [Boolean] :all Show notifications marked as read.
+      # @option options [Boolean] :participating Show only notifications that the user is participating in or mentioned in.
+      # @option options [String] :time Only show notifications since a given time. Should be in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ), such as: “2012-10-09T23:39:01Z”.
+      # @return [Array] List of notifications.
+      # @see http://developer.github.com/v3/activity/notifications/#list-your-notifications-in-a-repository
+      # @example
+      #   client.repo_notifications('caseyscarborough','github')
+      def repo_notifications(owner, repo, options={})
+        get "/repos/#{owner}/#{repo}/notifications", auth_params
+      end
+
       # List repositories a user is starring.
       #
       # Can be used unauthenticated or authenticated.
@@ -247,7 +281,7 @@
           get "/user/subscriptions", auth_params
         end
       end
-      
+
     end
   
   end
