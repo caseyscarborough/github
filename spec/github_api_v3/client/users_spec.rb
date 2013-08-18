@@ -93,6 +93,42 @@ describe GitHub::Client::Users do
     end
   end
 
+  describe '.key', :vcr do
+    it 'returns a key' do
+      test_client.key(5427887).should be_instance_of Hash
+    end
+
+    it 'returns unauthorized when not authorized' do
+      expect { GitHub.key(5427887) }.to raise_error GitHub::Unauthorized
+    end
+  end
+
+  key_id = ""
+  describe '.create_key', :vcr do
+    it 'returns the key information' do
+      key = test_client.create_key('test-key','ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtABGJv4nOGmDZMUzlE1IJhI0d9rIivLv74ah5gpnQJls27WxjgntCr3JZQXX5msMmq1DFdnKmdBucksFf62xgCU0blBW0cFz40tlsfxrMUTxlt1ywaPdj4MD3PXMQsv8asE/gcRcAVCsVn1eOCLuPig4U90/iMr7anjVrwNhYF9RI5j5QxZt5G1e420zJNG23asjDLf37yepQRNWN/Q9Nuoz0o/2Dvs7JTGlI6lsPCxbgV3QrjFlOGpCJmCvMGW3HU7BoY286i/2ZWK9AHc5V1Mor9dQqd3B+WmWczbRYVRky9KYCCoCt9/y4oZ6GfYAyakGSV74JYxgSpcHr9BP3')
+      key_id = key.id
+      key.should be_instance_of Hash
+    end
+  end
+
+  describe '.update_key', :vcr do
+    it 'returns the key information' do
+      key = test_client.update_key(key_id, 'test-key2', 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtABGJv4nOGmDZMUzlE1IJhI0d9rIivLv74ah5gpnQJls27WxjgntCr3JZQXX5msMmq1DFdnKmdBucksFf62xgCU0blBW0cFz40tlsfxrMUTxlt1ywaPdj4MD3PXMQsv8asE/gcRcAVCsVn1eOCLuPig4U90/iMr7anjVrwNhYF9RI5j5QxZt5G1e420zJNG23asjDLf37yepQRNWN/Q9Nuoz0o/2Dvs7JTGlI6lsPCxbgV3QrjFlOGpCJmCvMGW3HU7BoY286i/2ZWK9AHc5V1Mor9dQqd3B+WmWczbRYVRky9KYCCoCt9/y4oZ6GfYAyakGSV74JYxgSpcHr9BP4')
+      key.should be_instance_of Hash
+    end
+  end
+
+  describe '.delete_key', :vcr do
+    it 'returns true or false' do
+      [true,false].should include test_client.delete_key(key_id)
+    end
+
+    it 'should delete the key' do
+      expect { test_client.key(key_id) }.to raise_error GitHub::NotFound
+    end
+  end
+
   describe '.events', :vcr do
     it 'returns an array of events' do
       GitHub.events('caseyscarborough').should be_instance_of Array 

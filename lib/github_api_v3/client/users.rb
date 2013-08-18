@@ -157,6 +157,35 @@
         get "/user/keys/#{id}", auth_params
       end
 
+      # Create a public key.
+      #
+      # Requires authentication.
+      #
+      # @param title [String] The title of the public key.
+      # @param key [String] The actual public key.
+      # @return [Hash] The public key's data.
+      # @see http://developer.github.com/v3/users/keys/#create-a-public-key
+      # @example
+      #   client.create_key('octocat@octomac', 'ssh-rsa AAA...')
+      def create_key(title, key)
+        post '/user/keys', auth_params, {title: title, key: key}
+      end
+
+      # Update a public key
+      #
+      # Requires authentication.
+      #
+      # @param id [Integer] The ID of the public key to update.
+      # @param title [String] The title of the public key.
+      # @param key [String] The actual public key.
+      # @return [Hash] The public key's data. 
+      # @see http://developer.github.com/v3/users/keys/#update-a-public-key
+      # @example
+      #   client.update_key(1, 'octocat@octomac', 'ssh-rsa AAA...')
+      def update_key(id, title, key)
+        patch "/user/keys/#{id}", auth_params, {title: title, key: key}
+      end
+
       # Remove a public key from a user's account.
       #
       # Requires authentication.
