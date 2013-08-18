@@ -13,7 +13,7 @@ module GitHub
       # @return [Array]
       # @see http://developer.github.com/v3/repos/#list-all-public-repositories
       def all_repos
-        get '/repositories'
+        get '/repositories', auth_params
       end
 
       # Get one repository.
@@ -25,7 +25,7 @@ module GitHub
       # @example
       #   GitHub.repo('caseyscarborough','github')
       def repo(owner, repo)
-        get "/repos/#{owner}/#{repo}"
+        get "/repos/#{owner}/#{repo}", auth_params
       end
 
       # Get all repositories for a user.
@@ -115,7 +115,7 @@ module GitHub
       # @example
       #   GitHub.org_repos('rails')
       def org_repos(org)
-        get "/orgs/#{org}/repos"
+        get "/orgs/#{org}/repos", auth_params
       end
 
       # List contributors for a repository.
@@ -127,7 +127,7 @@ module GitHub
       # @example
       #   GitHub.contributors('caseyscarborough','github')
       def contributors(owner, repo)
-        get "/repos/#{owner}/#{repo}/contributors"
+        get "/repos/#{owner}/#{repo}/contributors", auth_params
       end
 
       # List languages for a repository.
@@ -139,7 +139,7 @@ module GitHub
       # @example
       #   GitHub.languages('caseyscarborough','github')
       def languages(owner, repo)
-        get "/repos/#{owner}/#{repo}/languages"
+        get "/repos/#{owner}/#{repo}/languages", auth_params
       end
 
       # def teams(owner, repo)
@@ -155,7 +155,7 @@ module GitHub
       # @example
       #   GitHub.tags('caseyscarborough','github')
       def tags(owner, repo)
-        get "/repos/#{owner}/#{repo}/tags"
+        get "/repos/#{owner}/#{repo}/tags", auth_params
       end
 
       # List branches for a repository.
@@ -167,7 +167,7 @@ module GitHub
       # @example
       #   GitHub.branches('caseyscarborough','github')
       def branches(owner, repo)
-        get "/repos/#{owner}/#{repo}/branches"
+        get "/repos/#{owner}/#{repo}/branches", auth_params
       end
 
       # Get information about a branch.
@@ -179,7 +179,7 @@ module GitHub
       # @example
       #   GitHub.branch('caseyscarborough','github','master')
       def branch(owner, repo, branch)
-        get "/repos/#{owner}/#{repo}/branches/#{branch}"
+        get "/repos/#{owner}/#{repo}/branches/#{branch}", auth_params
       end
 
       # Get list of collaborators for a repository.
@@ -191,7 +191,7 @@ module GitHub
       # @example
       #   GitHub.collaborators('caseyscarborough','github')
       def collaborators(owner, repo)
-        get "/repos/#{owner}/#{repo}/collaborators"
+        get "/repos/#{owner}/#{repo}/collaborators", auth_params
       end
 
       # Determine if a user is a collaborator to a repository.
@@ -204,7 +204,7 @@ module GitHub
       # @example
       #   GitHub.collaborator?('caseyscarborough','github','caseyscarborough')
       def collaborator?(owner, repo, user)
-        boolean_get "/repos/#{owner}/#{repo}/collaborators/#{user}"
+        boolean_get "/repos/#{owner}/#{repo}/collaborators/#{user}", auth_params
       end
 
       # Add a collaborator to a repository.
