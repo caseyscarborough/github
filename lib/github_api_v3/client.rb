@@ -1,6 +1,7 @@
 require 'json'
 require 'github_api_v3/client/users'
 require 'github_api_v3/client/repos'
+require 'github_api_v3/client/gists'
 
 module GitHub
   class Client
@@ -10,6 +11,7 @@ module GitHub
 
     include GitHub::Client::Users
     include GitHub::Client::Repos
+    include GitHub::Client::Gists
 
     attr_reader :login, :access_token
 
