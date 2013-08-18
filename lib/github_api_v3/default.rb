@@ -5,7 +5,10 @@ module GitHub
 
     # The default API endpoint for GitHub's API.
     API_ENDPOINT = "https://api.github.com".freeze
-    
+
+    # The default web endpoint for GitHub.
+    WEB_ENDPOINT = "https://github.com".freeze
+
   end
 end
 

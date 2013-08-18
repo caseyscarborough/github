@@ -11,10 +11,11 @@ module GitHub
       # @return [Array] Array of events.
       # @see http://developer.github.com/v3/activity/events/#list-public-events
       # @example
-      #   GitHub.public_events
-      def public_events
+      #   GitHub.events
+      def events
         get '/events'
       end
+      alias :public_events :events
 
       # List repository events.
       #
