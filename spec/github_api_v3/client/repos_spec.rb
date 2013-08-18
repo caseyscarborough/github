@@ -34,7 +34,23 @@ describe GitHub::Client::Repos do
     end
 
     it 'returns unauthorized when not authorized' do
-      expect { GitHub.create_repo('7ce4519eb32aa18d0917b0d407b53064') }.to raise_error GitHub::Unauthorized
+      expect { GitHub.create_repo('098f6bcd4621d373cade4e832627b4f6') }.to raise_error GitHub::Unauthorized
+    end
+  end
+
+  describe '.edit_repo', :vcr do
+    it 'returns a hash' do
+      repo = test_client.edit_repo(test_client.login, '098f6bcd4621d373cade4e832627b4f6', description: 'An awesome repo!')
+      repo.should be_instance_of Hash
+    end
+
+    it 'edits the repository' do
+      repo = GitHub.repo(test_client.login, '098f6bcd4621d373cade4e832627b4f6')
+      repo.description.should == 'An awesome repo!'
+    end
+
+    it 'returns 404 when not authorized' do
+      expect { GitHub.edit_repo(test_client.login, '098f6bcd4621d373cade4e832627b4f6') }.to raise_error GitHub::NotFound
     end
   end
 

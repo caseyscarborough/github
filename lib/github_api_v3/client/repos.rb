@@ -70,6 +70,30 @@ module GitHub
         post "/user/repos", auth_params, options.merge(name: name)
       end
 
+      # Edit a repository.
+      #
+      # Requires authentication.
+      #
+      # @param owner [String] The repository owner.
+      # @param repo [String] The repository name.
+      # @param options [Hash] Optional information.
+      # @option options [String] :name The repository name.
+      # @option options [String] :description Repository description.
+      # @option options [String] :homepage Repository homepage.
+      # @option options [Boolean] :private
+      # @option options [Boolean] :has_issues
+      # @option options [Boolean] :has_wiki
+      # @option options [Boolean] :has_downloads
+      # @option options [String] :default_branch The default branch.
+      # @return [Hash] Repository information.
+      # @see http://developer.github.com/v3/repos/#edit
+      # @example
+      #   client.edit_repo('caseyscarborough','github', name: 'github', description: 'An awesome repository!')
+      def edit_repo(owner, repo, options={})
+        options[:name] = repo unless options[:name]
+        patch "/repos/#{owner}/#{repo}", auth_params, options
+      end
+
       # Delete a repository.
       # 
       # Requires authentication.
