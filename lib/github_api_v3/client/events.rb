@@ -97,14 +97,13 @@ module GitHub
       #
       # Requires authentication. Returns the user's organization events.
       #
-      # @param username [String] Username for user to get events for.
       # @param org [String] Organization name.
       # @return [Array] Array of events.
       # @see http://developer.github.com/v3/activity/events/#list-events-for-an-organization
-      def user_organization_events(username, org)
-        get "/users/#{username}/events/orgs/#{org}"
+      def user_organization_events(org)
+        get "/users/#{login}/events/orgs/#{org}"
       end
-      
+
     end
 
   end

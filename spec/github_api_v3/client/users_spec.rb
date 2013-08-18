@@ -129,14 +129,4 @@ describe GitHub::Client::Users do
     end
   end
 
-  describe '.events', :vcr do
-    it 'returns an array of events' do
-      GitHub.events('caseyscarborough').should be_instance_of Array 
-    end
-
-    it 'returns a 404 for user not found' do
-      expect { GitHub.events('098f6bcd4621d373cade4e832627b4f6') }.to raise_error GitHub::NotFound
-    end
-  end
-
 end
