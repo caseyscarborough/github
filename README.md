@@ -159,9 +159,31 @@ client.delete_gist(1234567)
 ```
 Check out the [Gist documentation](http://rdoc.info/gems/github_api_v3/GitHub/Client/Gists) for more information.
 
+#### Markdown
+
+You can render any markdown test using the markdown method.
+
+```ruby
+# Render a string
+GitHub.markdown('# Markdown text!')
+
+# Render a file
+GitHub.markdown(File.read('markdown.md'))
+```
+
 ## Running the Test Suite
 
-The test suite can be run by issuing the following command from the root of the directory:
+Begin by renaming the config.sample.yml file to config.yml and add your information to it. You can get a proper authorization key by issuing the following command with your username and password:
+
+```bash
+$ curl -i -u "username:password" \
+  https://api.github.com/authorizations \
+  -d '{"scopes":["delete_repo", "user", "public_repo", "repo", "gist"]}'
+```
+
+This will give you a `token` that you can add to config.yml.
+
+The test suite can then be run by issuing the following command from the root of the directory:
 
 ```bash
 $ rspec spec/
@@ -178,10 +200,6 @@ Some main missing functionality:
   * Hooks
   * Forks
   * etc.
-* Markdown
-* Editing Gists
-* Editing Repos
-* Updating User keys
 
 ## Contributing
 
