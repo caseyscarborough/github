@@ -1,10 +1,11 @@
 require 'json'
+require 'github_api_v3/client/events'
+require 'github_api_v3/client/feeds'
+require 'github_api_v3/client/gists'
+require 'github_api_v3/client/gitignore'
+require 'github_api_v3/client/markdown'
 require 'github_api_v3/client/users'
 require 'github_api_v3/client/repos'
-require 'github_api_v3/client/gists'
-require 'github_api_v3/client/markdown'
-require 'github_api_v3/client/gitignore'
-require 'github_api_v3/client/events'
 
 module GitHub
 
@@ -18,12 +19,13 @@ module GitHub
     # Default base uri for the API functionality.
     base_uri Default::API_ENDPOINT
 
-    include GitHub::Client::Users
-    include GitHub::Client::Repos
+    include GitHub::Client::Events
+    include GitHub::Client::Feeds
+    include GitHub::Client::Gitignore
     include GitHub::Client::Gists
     include GitHub::Client::Markdown
-    include GitHub::Client::Gitignore
-    include GitHub::Client::Events
+    include GitHub::Client::Users
+    include GitHub::Client::Repos
 
     attr_reader :login, :access_token
 
