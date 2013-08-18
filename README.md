@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/github_api_v3.png)](http://badge.fury.io/rb/github_api_v3)
 
-This is a simple wrapper for GitHub's v3 API. It is in the EARLY stages of development. Knowing a little about [GitHub's API](http://developer.github.com/) will aid in its use.
+This is a simple wrapper for GitHub's v3 API. Knowing a little about [GitHub's API](http://developer.github.com/) will aid in its use, but is not necessary.
 
 ## Documentation
 
