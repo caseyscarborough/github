@@ -4,6 +4,7 @@ require 'github_api_v3/client/repos'
 require 'github_api_v3/client/gists'
 require 'github_api_v3/client/markdown'
 require 'github_api_v3/client/gitignore'
+require 'github_api_v3/client/events'
 
 module GitHub
 
@@ -22,6 +23,7 @@ module GitHub
     include GitHub::Client::Gists
     include GitHub::Client::Markdown
     include GitHub::Client::Gitignore
+    include GitHub::Client::Events
 
     attr_reader :login, :access_token
 

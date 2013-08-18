@@ -198,9 +198,6 @@
         boolean_delete "/user/keys/#{id}", auth_params
       end
       
-      def events(username)
-        get "/users/#{username}/events"
-      end
     end
   
   end
