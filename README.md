@@ -124,6 +124,26 @@ client.remove_collaborator('owner','repo-name','user-to-remove')
 ```
 For a full list with descriptions, see the [Repos documentation](http://rdoc.info/gems/github_api_v3/GitHub/Client/Repos) for the gem.
 
+#### Events
+
+The following are some sample usages of the Events module.
+
+```ruby
+# Get all events for a user
+GitHub.user_events('caseyscarborough')
+
+# Get public events for a user
+GitHub.public_user_events('caseyscarborough')
+
+# Get all public GitHub events
+GitHub.public_events
+
+# Get all events for a repository
+GitHub.repo_events('owner','repo-name')
+
+# ...etc
+```
+
 #### Gists
 
 The following are sample uses for the Gists module.
@@ -169,6 +189,19 @@ GitHub.markdown('# Markdown text!')
 
 # Render a file
 GitHub.markdown(File.read('markdown.md'))
+```
+
+#### Gitignore
+
+You can retrieve .gitignore templates using the Gitignore API as well.
+
+```ruby
+GitHub.gitignore_list
+# => ["Actionscript", "Android", "C", "C++", "CSharp"...]
+
+# Retrieve a specific template
+GitHub.gitignore("Ruby")
+# => {"name"=>"Ruby", "source"=>"*.gem\n*.rbc\n.bundle...}
 ```
 
 ## Running the Test Suite
