@@ -12,6 +12,16 @@ RSpec.configure do |config|
 end
 
 VCR.configure do |c|
+  c.configure_rspec_metadata!
+  c.filter_sensitive_data("<TEST_ACCESS_TOKEN>") do
+    CONFIG['test_access_token']
+  end
+  c.filter_sensitive_data("<TEST_LOGIN>") do
+    CONFIG['test_login']
+  end
+  c.filter_sensitive_data("<TEST_PASSWORD>") do
+    CONFIG['test_password']
+  end
   c.cassette_library_dir = 'spec/cassettes'
   c.default_cassette_options = {
     :serialize_with             => :json,
@@ -19,7 +29,6 @@ VCR.configure do |c|
     :decode_compressed_response => true
   }
   c.hook_into :webmock
-  c.configure_rspec_metadata!
 end
 
 def test_login
