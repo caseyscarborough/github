@@ -4,11 +4,15 @@ describe GitHub::Client::Users do
 
   describe '.user', :vcr do
     it 'returns a hash' do
-        GitHub.user('caseyscarborough').should be_instance_of Hash
+       GitHub.user('caseyscarborough').should be_instance_of Hash
     end
 
     it 'gets the correct user info', :vcr do
-        GitHub.user('caseyscarborough')['login'].should eq('caseyscarborough')
+      GitHub.user('caseyscarborough')['login'].should eq('caseyscarborough')
+    end
+
+    it 'returns a 404 if user not found' do
+      expect { GitHub.user('098f6bcd4621d373cade4e832627b4f6') }.to raise_error GitHub::NotFound
     end
   end
 
@@ -36,9 +40,12 @@ describe GitHub::Client::Users do
   end
 
   describe '.follows?', :vcr do
-    it 'returns a boolean' do
-      follows = GitHub.follows?('caseyscarborough', 'matz')
-      [true, false].should include follows
+    it 'returns true when following' do
+      GitHub.follows?('caseyscarborough','matz').should be_true
+    end
+
+    it 'returns false when not following' do
+      GitHub.follows?('caseyscarborough','caseyscarborough').should be_false
     end
   end
 
@@ -80,11 +87,19 @@ describe GitHub::Client::Users do
     it 'returns an array of keys for authenticated user' do
       test_client.keys.should be_instance_of Array
     end
+
+    it 'returns 404 for user not found' do
+      expect { GitHub.keys('098f6bcd4621d373cade4e832627b4f6') }.to raise_error GitHub::NotFound
+    end
   end
 
   describe '.events', :vcr do
     it 'returns an array of events' do
       GitHub.events('caseyscarborough').should be_instance_of Array 
+    end
+
+    it 'returns a 404 for user not found' do
+      expect { GitHub.events('098f6bcd4621d373cade4e832627b4f6') }.to raise_error GitHub::NotFound
     end
   end
 

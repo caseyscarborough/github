@@ -20,6 +20,10 @@ describe GitHub::Client::Gists do
     it 'returns gist information' do
       GitHub.gist(5928712).should be_instance_of Hash
     end
+
+    it 'returns a 404 when not found' do
+      expect { GitHub.gist(9999999) }.to raise_error GitHub::NotFound
+    end
   end
 
   describe '.create_delete_gist', :vcr do
@@ -40,11 +44,19 @@ describe GitHub::Client::Gists do
     it 'stars a gist' do
       test_client.star_gist(5928712).should be_true
     end
+
+    it 'returns false when not found' do
+      test_client.star_gist(9999999).should be_false
+    end
   end
 
   describe '.gist_starred?', :vcr do
     it 'should return true or false' do
       [true,false].should include test_client.gist_starred?(5928712)
+    end
+
+    it 'returns false when not found' do
+      test_client.gist_starred?(9999999).should be_false
     end
   end
 
@@ -52,11 +64,19 @@ describe GitHub::Client::Gists do
     it 'unstars a gist' do
       test_client.unstar_gist(5928712).should be_true
     end
+
+    it 'returns false when not found' do
+      test_client.unstar_gist(9999999).should be_false
+    end
   end
 
   describe '.fork_gist', :vcr do
     it 'forks a gist' do
       [true,false].should include test_client.fork_gist(1133830)
+    end
+
+    it 'returns false when not found' do
+      test_client.fork_gist(9999999).should be_false
     end
   end
 

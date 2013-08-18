@@ -32,11 +32,23 @@ describe GitHub::Client::Repos do
     it 'creates the repo' do
       GitHub.repo(test_client.login, '098f6bcd4621d373cade4e832627b4f6').should be_instance_of Hash
     end
+
+    it 'returns unauthorized when not authorized' do
+      expect { GitHub.create_repo('7ce4519eb32aa18d0917b0d407b53064') }.to raise_error GitHub::Unauthorized
+    end
   end
 
   describe '.delete_repo', :vcr do
     it 'deletes a repo' do
-      [true].should include test_client.delete_repo(test_client.login,'098f6bcd4621d373cade4e832627b4f6')
+      [true,false].should include test_client.delete_repo(test_client.login,'098f6bcd4621d373cade4e832627b4f6')
+    end
+
+    it 'returns false when not found', :vcr do
+      test_client.delete_repo(test_client.login,'7ce4519eb32aa18d0917b0d407b53064').should be_false
+    end
+
+    it 'returns false if not authorized' do
+      GitHub.delete_repo('caseyscarborough','github').should be_false
     end
   end
 
@@ -44,17 +56,29 @@ describe GitHub::Client::Repos do
     it 'returns an array of repos' do
       GitHub.org_repos('rails').should be_instance_of Array
     end
+
+    it 'returns a 404 if repo not found', :vcr do
+      expect { GitHub.org_repos('7ce4519eb32aa18d0917b0d407b53064') }.to raise_error GitHub::NotFound
+    end
   end
 
   describe '.contributors', :vcr do
     it 'returns an array of contributors' do
       GitHub.contributors('rails','rails').should be_instance_of Array
     end
+
+    it 'returns a 404 if repo not found', :vcr do
+      expect { GitHub.contributors('test','7ce4519eb32aa18d0917b0d407b53064') }.to raise_error GitHub::NotFound
+    end
   end
 
   describe '.languages', :vcr do
     it 'returns a hash of languages' do
       GitHub.languages('rails','rails').should be_instance_of Hash
+    end
+
+    it 'returns a 404 if repo not found', :vcr do
+      expect { GitHub.languages('test','7ce4519eb32aa18d0917b0d407b53064') }.to raise_error GitHub::NotFound
     end
   end
 
@@ -68,6 +92,10 @@ describe GitHub::Client::Repos do
     it 'returns an array of tags' do
       GitHub.tags('rails','rails').should be_instance_of Array
     end
+
+    it 'returns a 404 if repo not found', :vcr do
+      expect { GitHub.tags('test','7ce4519eb32aa18d0917b0d407b53064') }.to raise_error GitHub::NotFound
+    end
   end
 
   describe '.branches', :vcr do
@@ -80,11 +108,19 @@ describe GitHub::Client::Repos do
     it 'returns a hash of branch info' do
       GitHub.branch('rails','rails','master').should be_instance_of Hash
     end
+
+    it 'returns a 404 if repo not found', :vcr do
+      expect { GitHub.branch('test','7ce4519eb32aa18d0917b0d407b53064','test') }.to raise_error GitHub::NotFound
+    end
   end
 
   describe '.collaborators', :vcr do
     it 'returns a list of collaborators' do
       GitHub.collaborators('caseyscarborough','github').should be_instance_of Array
+    end
+
+    it 'returns a 404 if repo not found', :vcr do
+      expect { GitHub.collaborators('test', '7ce4519eb32aa18d0917b0d407b53064') }.to raise_error GitHub::NotFound
     end
   end
 
