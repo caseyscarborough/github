@@ -1,6 +1,11 @@
 module GitHub
+
+  # Default configuration information.
   module Default
+
+    # The default API endpoint for GitHub's API.
     API_ENDPOINT = "https://api.github.com".freeze
+    
   end
 end
 
