@@ -197,7 +197,41 @@
       def delete_key(id)
         boolean_delete "/user/keys/#{id}", auth_params
       end
-      
+
+      # List repositories a user is starring.
+      #
+      # Can be used unauthenticated or authenticated.
+      #
+      # @param username [String] The target user's username.
+      # @return [Array]
+      # @see http://developer.github.com/v3/activity/starring/#list-repositories-being-starred
+      # @example
+      #   GitHub.starring('caseyscarborough')
+      # @example
+      #   client.starring
+      def starring(username=nil)
+        if username
+          get "/users/#{username}/starred"
+        else
+          get "/user/starred", auth_params
+        end
+      end
+
+
+      # Check if you are starring a repository.
+      #
+      # Requires authentication.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name.
+      # @return [Boolean] True if successful, false if not.
+      # @see http://developer.github.com/v3/activity/starring/#check-if-you-are-starring-a-repository
+      # @example
+      #   client.starring?('caseyscarborough','github')
+      def starring?(owner, repo)
+        boolean_get "/user/starred/#{owner}/#{repo}", auth_params
+      end
+
     end
   
   end

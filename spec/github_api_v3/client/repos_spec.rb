@@ -159,4 +159,22 @@ describe GitHub::Client::Repos do
     end
   end
 
+  describe '.stargazers', :vcr do
+    it 'returns a list of stargazers' do
+      GitHub.stargazers('caseyscarborough','github').should be_instance_of Array
+    end
+  end
+
+  describe '.unstar', :vcr do
+    it 'unstars a repository' do
+      test_client.unstar('caseyscarborough','github').should be_true
+    end
+  end
+
+  describe '.star', :vcr do
+    it 'stars a repository' do
+      test_client.star('caseyscarborough','github').should be_true
+    end
+  end
+
 end

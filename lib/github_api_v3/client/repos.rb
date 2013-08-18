@@ -214,6 +214,7 @@ module GitHub
       # @param owner [String] Repository owner.
       # @param repo [String] Repository name.
       # @param user [String] User to add.
+      # @return [Boolean] True if successful, false if not.
       # @see http://developer.github.com/v3/repos/collaborators/#add-collaborator
       def add_collaborator(owner, repo, user)
         boolean_put "/repos/#{owner}/#{repo}/collaborators/#{user}", auth_params
@@ -226,9 +227,46 @@ module GitHub
       # @param owner [String] Repository owner.
       # @param repo [String] Repository name.
       # @param user [String] User to remove.
+      # @return [Boolean] True if successful, false if not.
       # @see http://developer.github.com/v3/repos/collaborators/#remove-collaborator
       def remove_collaborator(owner, repo, user)
         boolean_delete "/repos/#{owner}/#{repo}/collaborators/#{user}", auth_params
+      end
+
+      # List Stargazers for a repository.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name.
+      # @return [Array] List of users.
+      # @see http://developer.github.com/v3/activity/starring/#list-stargazers
+      # @example
+      #   GitHub.stargazers('caseyscarborough','github')
+      def stargazers(owner, repo)
+        get "/repos/#{owner}/#{repo}/stargazers", auth_params
+      end
+
+      # Star a repository.
+      #
+      # Requires authentication.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name.
+      # @return [Boolean] True if successful, false if not.
+      # @see http://developer.github.com/v3/activity/starring/#star-a-repository
+      def star(owner, repo)
+        boolean_put "/user/starred/#{owner}/#{repo}", auth_params
+      end
+
+      # Unstar a repository.
+      #
+      # Requires authentication.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name.
+      # @return [Boolean] True if successful, false if not.
+      # @see http://developer.github.com/v3/activity/starring/#unstar-a-repository
+      def unstar(owner, repo)
+        boolean_delete "/user/starred/#{owner}/#{repo}", auth_params
       end
 
     end
