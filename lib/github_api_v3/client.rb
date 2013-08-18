@@ -4,8 +4,9 @@ require 'github_api_v3/client/feeds'
 require 'github_api_v3/client/gists'
 require 'github_api_v3/client/gitignore'
 require 'github_api_v3/client/markdown'
-require 'github_api_v3/client/users'
+require 'github_api_v3/client/orgs'
 require 'github_api_v3/client/repos'
+require 'github_api_v3/client/users'
 
 module GitHub
 
@@ -24,8 +25,9 @@ module GitHub
     include GitHub::Client::Gitignore
     include GitHub::Client::Gists
     include GitHub::Client::Markdown
-    include GitHub::Client::Users
+    include GitHub::Client::Orgs
     include GitHub::Client::Repos
+    include GitHub::Client::Users
 
     attr_reader :login, :access_token
 

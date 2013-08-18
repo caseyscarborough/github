@@ -169,4 +169,14 @@ describe GitHub::Client::Users do
     end
   end
 
+  describe '.organizations', :vcr do
+    it 'returns an unauthenticated users organizations' do
+      GitHub.organizations('caseyscarborough').should be_instance_of Array
+    end
+
+    it 'returns an authenticated users organizations' do
+      test_client.organizations.should be_instance_of Array
+    end
+  end
+
 end

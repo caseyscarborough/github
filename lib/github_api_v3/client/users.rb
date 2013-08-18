@@ -282,6 +282,23 @@
         end
       end
 
+      # List public organizations for a user.
+      #
+      # @param username [String] The target user's username.
+      # @return [Array] List of organizations.
+      # @see http://developer.github.com/v3/orgs/#list-user-organizations
+      # @example
+      #   GitHub.organizations('caseyscarborough')
+      # @example
+      #   client.organizations
+      def organizations(username=nil)
+        if username
+          get "/users/#{username}/orgs"
+        else
+          get "/user/orgs", auth_params
+        end
+      end
+
     end
   
   end
