@@ -26,15 +26,23 @@ describe GitHub::Client::Gists do
     end
   end
 
-  describe '.create_delete_gist', :vcr do
-    gist_id = ""
-
+  gist_id = ""
+  describe '.create_gist', :vcr do
     it 'creates a gist' do
       gist = test_client.create_gist(files: {"file1.txt" => { content: "File contents" }}, description: "Gist description", public: "false")
       gist.should be_instance_of Hash
       gist_id = gist.id
     end
+  end
 
+  describe '.edit_gist', :vcr do
+    it 'edits a gist' do
+      gist = test_client.edit_gist(gist_id, description: "Edited gist description")
+      gist.description.should == "Edited gist description"
+    end
+  end
+
+  describe '.delete_gist', :vcr do
     it 'deletes a gist' do
       test_client.delete_gist(gist_id).should be_true
     end

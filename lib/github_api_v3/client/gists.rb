@@ -55,6 +55,21 @@ module GitHub
         post "/gists", auth_params, options
       end
 
+      # Edit a gist
+      #
+      # Requires authentication.
+      #
+      # @param id [Integer] The ID of the Gist to edit.
+      # @param files [Hash] Filenames in the gist.
+      # @param options [Hash] Optional options when creating the gist.
+      # @option options [Boolean] :public Whether the gist should be public. True by default.
+      # @option options [String] :description Gist description.
+      # @return [Hash] Gist information.
+      def edit_gist(id, files={}, options={:public => true})
+        options.merge!(files)
+        patch "/gists/#{id}", auth_params, options
+      end
+
       # Check if a gist is starred.
       #
       # Requires authentication.
