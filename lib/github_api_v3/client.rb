@@ -3,7 +3,6 @@ require 'github_api_v3/client/users'
 require 'github_api_v3/client/repos'
 require 'github_api_v3/client/gists'
 require 'github_api_v3/client/markdown'
-require 'github_api_v3/client/gitignore'
 
 module GitHub
   class Client
@@ -15,7 +14,6 @@ module GitHub
     include GitHub::Client::Repos
     include GitHub::Client::Gists
     include GitHub::Client::Markdown
-    include GitHub::Client::Gitignore
 
     attr_reader :login, :access_token
 
@@ -61,6 +59,19 @@ module GitHub
 
       def boolean_post(url, params={}, body={})
         response = self.class.post url, query: params, body: body.to_json
+        response.code == 204
+      rescue GitHub::NotFound
+        false
+      end
+
+      def patch(url, params={}, body={})
+        response = self.class.patch url, query: params, body: body.to_json
+        handle_response(response)
+        response.parsed_response
+      end
+
+      def boolean_patch(url, params={}, body={})
+        response = self.class.patch url, query: params, body: body.to_json
         response.code == 204
       rescue GitHub::NotFound
         false
