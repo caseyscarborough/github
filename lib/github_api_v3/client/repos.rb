@@ -76,8 +76,8 @@ module GitHub
       # @see http://developer.github.com/v3/repos/#delete-a-repository
       # @example
       #   client.delete_repo('repo-name')
-      def delete_repo(repo)
-        delete "/repos/#{login}/#{repo}", auth_params, true
+      def delete_repo(owner, repo)
+        delete "/repos/#{owner}/#{repo}", auth_params, true
       end
 
       # Get organization repositories.
@@ -153,6 +153,55 @@ module GitHub
       #   GitHub.branch('caseyscarborough','github','master')
       def branch(owner, repo, branch)
         get "/repos/#{owner}/#{repo}/branches/#{branch}"
+      end
+
+      # Get list of collaborators for a repository.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name.
+      # @return [Array] Array of collaborators.
+      # @see http://developer.github.com/v3/repos/collaborators/#list
+      # @example
+      #   GitHub.collaborators('caseyscarborough','github')
+      def collaborators(owner, repo)
+        get "/repos/#{owner}/#{repo}/collaborators"
+      end
+
+      # Determine if a user is a collaborator to a repository.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name.
+      # @param user [String] User to check against.
+      # @return [Boolean] True if user is a collaborator, false if not.
+      # @see http://developer.github.com/v3/repos/collaborators/#get
+      # @example
+      #   GitHub.collaborator?('caseyscarborough','github','caseyscarborough')
+      def collaborator?(owner, repo, user)
+        get "/repos/#{owner}/#{repo}/collaborators/#{user}", {}, true
+      end
+
+      # Add a collaborator to a repository.
+      #
+      # Requires authentication.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name.
+      # @param user [String] User to add.
+      # @see http://developer.github.com/v3/repos/collaborators/#add-collaborator
+      def add_collaborator(owner, repo, user)
+        put "/repos/#{owner}/#{repo}/collaborators/#{user}", auth_params, true
+      end
+
+      # Remove a collaborator from a repository.
+      #
+      # Requires authentication.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name.
+      # @param user [String] User to remove.
+      # @see http://developer.github.com/v3/repos/collaborators/#remove-collaborator
+      def remove_collaborator(owner, repo, user)
+        delete "/repos/#{owner}/#{repo}/collaborators/#{user}", auth_params, true
       end
 
     end

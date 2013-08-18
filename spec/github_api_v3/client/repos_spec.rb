@@ -36,7 +36,7 @@ describe GitHub::Client::Repos do
 
   describe '.delete_repo', :vcr do
     it 'deletes a repo' do
-      [true].should include test_client.delete_repo('098f6bcd4621d373cade4e832627b4f6')
+      [true].should include test_client.delete_repo(test_client.login,'098f6bcd4621d373cade4e832627b4f6')
     end
   end
 
@@ -79,6 +79,31 @@ describe GitHub::Client::Repos do
   describe '.branch', :vcr do
     it 'returns a hash of branch info' do
       GitHub.branch('rails','rails','master').should be_instance_of Hash
+    end
+  end
+
+  describe '.collaborators', :vcr do
+    it 'returns a list of collaborators' do
+      GitHub.collaborators('caseyscarborough','github').should be_instance_of Array
+    end
+  end
+
+  describe '.collaborator?', :vcr do
+    it 'returns a boolean' do
+      [true,false].should include GitHub.collaborator?('caseyscarborough','github','caseyscarborough')
+    end
+  end
+
+  describe '.add_remove_collaborator', :vcr do
+    before { test_client.create_repo('098f6bcd4621d373cade4e832627b4f6') }
+    after  { test_client.delete_repo(test_client.login, '098f6bcd4621d373cade4e832627b4f6') }
+
+    it 'adds a collaborator' do
+      test_client.add_collaborator(test_client.login,'098f6bcd4621d373cade4e832627b4f6',test_client.login)
+    end
+
+    it 'removes a collaborator', :vcr do
+      test_client.remove_collaborator(test_client.login,'098f6bcd4621d373cade4e832627b4f6',test_client.login)
     end
   end
 

@@ -21,10 +21,10 @@ module GitHub
 
     private
 
-      def get(url, params={})
+      def get(url, params={}, boolean=false)
         response = self.class.get url, query: params
         handle_response(response)
-        response.parsed_response
+        boolean ? response.code == 204 : response.parsed_response
       end
 
       def put(url, params={}, boolean=false)
