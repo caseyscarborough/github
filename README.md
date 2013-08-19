@@ -83,6 +83,13 @@ client.following?('caseyscarborough')
 # Get events for a user
 GitHub.events('caseyscarborough')
 
+# Get notifications for a user
+client.notifications
+
+# Get repositories watching/starring for a user
+client.watching
+client.starring
+
 # etc...
 ```
 You can find the available attributes [here](http://developer.github.com/v3/users/#get-a-single-user). Check the [Users documentation](http://rdoc.info/gems/github_api_v3/GitHub/Client/Users) for the gem for a complete list and more examples.
@@ -121,7 +128,16 @@ GitHub.branch('caseyscarborough','github','master')
 # Add/remove collaborator
 client.add_collaborator('owner','repo-name','user-to-add')
 client.remove_collaborator('owner','repo-name','user-to-remove')
+
+# Subscribe/unsubscribe/star/unstar a repository
+client.subscribe('caseyscarborough','github')
+client.unsubscribe('caseyscarborough','github')
+client.star('caseyscarborough','github')
+client.unstar('caseyscarborough','github')
+
+# etc...
 ```
+
 For a full list with descriptions, see the [Repos documentation](http://rdoc.info/gems/github_api_v3/GitHub/Client/Repos) for the gem.
 
 #### Events
@@ -141,7 +157,7 @@ GitHub.public_events
 # Get all events for a repository
 GitHub.repo_events('owner','repo-name')
 
-# ...etc
+# etc...
 ```
 
 #### Gists
@@ -176,6 +192,8 @@ client.star_gist(1234567)
 client.unstar_gist(1234567)
 client.fork_gist(1234567)
 client.delete_gist(1234567)
+
+# etc...
 ```
 Check out the [Gist documentation](http://rdoc.info/gems/github_api_v3/GitHub/Client/Gists) for more information.
 
@@ -209,8 +227,7 @@ GitHub.gitignore("Ruby")
 Begin by renaming the config.sample.yml file to config.yml and add your information to it. You can get a proper authorization key by issuing the following command with your username and password:
 
 ```bash
-$ curl -i -u "username:password" \
-  https://api.github.com/authorizations \
+$ curl -i -u "username:password" https://api.github.com/authorizations \
   -d '{"scopes":["delete_repo", "user", "public_repo", "repo", "gist"]}'
 ```
 
