@@ -6,7 +6,7 @@ This is a simple wrapper for GitHub's v3 API. Knowing a little about [GitHub's A
 
 ## Documentation
 
-Full documentation for the gem can be found at [rdoc.info/gems/github_api_v3/frames/index](http://rdoc.info/gems/github_api_v3/frames/index).
+Full documentation for the gem can be found at [rdoc.info/gems/github_api_v3/frames/index](http://rdoc.info/github/caseyscarborough/github/master/frames).
 
 ## Installation
 
