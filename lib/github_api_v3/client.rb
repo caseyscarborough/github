@@ -7,6 +7,7 @@ require 'github_api_v3/client/markdown'
 require 'github_api_v3/client/orgs'
 require 'github_api_v3/client/pull_requests'
 require 'github_api_v3/client/repos'
+require 'github_api_v3/client/stats'
 require 'github_api_v3/client/users'
 
 module GitHub
@@ -29,6 +30,7 @@ module GitHub
     include GitHub::Client::Orgs
     include GitHub::Client::PullRequests
     include GitHub::Client::Repos
+    include GitHub::Client::Stats
     include GitHub::Client::Users
 
     attr_reader :login, :access_token
