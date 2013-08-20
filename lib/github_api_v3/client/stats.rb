@@ -18,26 +18,51 @@ module GitHub
     # @see http://developer.github.com/v3/repos/statistics/
     module Stats
 
+      # Get contributors list with additions, deletions, and commit counts.
+      #
+      # @param owner [String] The repository owner's username.
+      # @param repo [String] The repository name.
+      # @return [Array] Contributor list.
       # @see http://developer.github.com/v3/repos/statistics/#get-contributors-list-with-additions-deletions-and-commit-counts
       def contributors_list(owner, repo)
         get "/repos/#{owner}/#{repo}/stats/contributors", auth_params
       end
 
+      # Get the last year of commit activity data.
+      #
+      # @param owner [String] The repository owner's username.
+      # @param repo [String] The repository name.
+      # @return [Array] Commit activity list.
       # @see http://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity-data
       def commit_activity(owner, repo)
         get "/repos/#{owner}/#{repo}/stats/commit_activity", auth_params
       end
 
+      # Get the number of additions and deletions per week.
+      #
+      # @param owner [String] The repository owner's username.
+      # @param repo [String] The repository name.
+      # @return [Array]
       # @see http://developer.github.com/v3/repos/statistics/#get-the-number-of-additions-and-deletions-per-week
       def code_frequency(owner, repo)
         get "/repos/#{owner}/#{repo}/stats/code_frequency", auth_params
       end
 
+      # Get the weekly commit count for the repo owner and everyone else.
+      #
+      # @param owner [String] The repository owner's username.
+      # @param repo [String] The repository name.
+      # @return [Array] Contributor list.
       # @see http://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count-for-the-repo-owner-and-everyone-else
       def participation(owner, repo)
         get "/repos/#{owner}/#{repo}/stats/participation", auth_params
       end
 
+      # Get the number of commits per hour in each day.
+      #
+      # @param owner [String] The repository owner's username.
+      # @param repo [String] The repository name.
+      # @return [Array]
       # @see http://developer.github.com/v3/repos/statistics/#get-the-number-of-commits-per-hour-in-each-day
       def punch_card(owner, repo)
         get "/repos/#{owner}/#{repo}/stats/punch_card", auth_params
