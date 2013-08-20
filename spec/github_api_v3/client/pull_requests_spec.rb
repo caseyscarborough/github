@@ -53,4 +53,60 @@ describe GitHub::Client::PullRequests do
       merge.should be_instance_of Hash
     end
   end
+
+  describe '.pull_request_comments', :vcr do
+    it 'returns an array of comments' do
+      comments = GitHub.pull_request_comments('api-test-organization', 'test-repo', 3)
+      comments.should be_instance_of Array
+    end
+  end
+
+  describe '.repo_pull_request_comments', :vcr do
+    it 'returns an array of comments' do
+      comments = GitHub.repo_pull_request_comments('api-test-organization', 'test-repo')
+      comments.should be_instance_of Array
+    end
+  end
+
+  comment_id = ""
+  describe '.create_pull_request_comment', :vcr do
+    it 'creates a comment' do
+      comment = test_client.create_pull_request_comment(
+        'api-test-organization',
+        'test-repo',
+        3,
+        body: 'Very nice!',
+        commit_id: 'cbe5c38e993027322ea85c3c7e2596f1bb90fe8e',
+        path: 'README.md',
+        position: 5
+      )
+      comment.should be_instance_of Hash
+      comment_id = comment.id
+    end
+  end
+
+  describe '.pull_request_comment', :vcr do
+    it 'retrieves a comment' do
+      comment = GitHub.pull_request_comment('api-test-organization', 'test-repo', comment_id)
+      comment.should be_instance_of Hash
+      comment.id.should == comment_id
+    end
+  end
+
+  describe '.edit_pull_request_comment', :vcr do
+    it 'edits a comment' do
+      comment = test_client.edit_pull_request_comment('api-test-organization','test-repo',comment_id,'What up')
+      comment.body.should == 'What up'
+      comment.id.should == comment_id
+    end
+  end
+
+  describe '.delete_pull_request_comment', :vcr do
+    it 'deletes a comment' do
+      result = test_client.delete_pull_request_comment('api-test-organization','test-repo',comment_id)
+      result.should be_true
+      expect { GitHub.pull_request_comment('api-test-organization','test-repo',comment_id) }.to raise_error GitHub::NotFound
+    end
+  end
+
 end

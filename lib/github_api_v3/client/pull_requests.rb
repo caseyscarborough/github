@@ -121,6 +121,99 @@ module GitHub
       def merge_pull_request(owner, repo, number)
         put "/repos/#{owner}/#{repo}/pulls/#{number}/merge", auth_params
       end
+
+      # List comments on a pull request.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name.
+      # @param number [Integer] The pull request number.
+      # @return [Array] Array of comments as hashes.
+      # @see http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request
+      def pull_request_comments(owner, repo, number)
+        get "/repos/#{owner}/#{repo}/pulls/#{number}/comments", auth_params
+      end
+
+      # List comments in a repository.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name. 
+      # @return [Array] Array of comments as hashes.
+      # @see http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository
+      def repo_pull_request_comments(owner, repo)
+        get "/repos/#{owner}/#{repo}/pulls/comments", auth_params
+      end
+
+      # Get a single pull request comment.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name. 
+      # @param number [Integer] Comment number.
+      # @retun [Hash] Comment information.
+      # @see http://developer.github.com/v3/pulls/comments/#get-a-single-comment
+      # @example
+      #   GitHub.pull_request_comment('caseyscarborough', 'github', 1242348)
+      def pull_request_comment(owner, repo, number)
+        get "/repos/#{owner}/#{repo}/pulls/comments/#{number}", auth_params
+      end
+
+      # Create a pull request comment.
+      #
+      # Requires authentication.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name. 
+      # @param number [Integer] Pull request number.
+      # @param options [Hash] Parameters.
+      # @option options [String] :body (required) Comment body.
+      # @option options [String] :commit_id (required) Sha of the commit to comment on.
+      # @option options [String] :path (required) Relative path of the file to comment on.
+      # @option options [Integer] :position (required) Line index in the diff to comment on.
+      # @return [Hash] Comment information.
+      # @see http://developer.github.com/v3/pulls/comments/#create-a-comment
+      # @example
+      #   client.create_pull_request_comment(
+      #     'caseyscarborough',
+      #     'github',
+      #     3,
+      #     body: 'Very nice!',
+      #     commit_id: 'cbe5c38e933022534ea85c3c7e2596f1bb90fe8e',
+      #     path: 'README.md',
+      #     position: 2
+      #   )
+      def create_pull_request_comment(owner, repo, number, options={})
+        post "/repos/#{owner}/#{repo}/pulls/#{number}/comments", auth_params, options
+      end
+
+      # Edit a pull request comment.
+      #
+      # Requires authentication.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name. 
+      # @param number [Integer] Comment number.
+      # @param body [String] New comment body.
+      # @return [Hash] Comment information.
+      # @see http://developer.github.com/v3/pulls/comments/#edit-a-comment
+      # @example
+      #   client.edit_pull_request_comment('caseyscarborough', 'github', 1242348, 'What up, girl?')
+      def edit_pull_request_comment(owner, repo, number, body)
+        options = { body: body }
+        patch "/repos/#{owner}/#{repo}/pulls/comments/#{number}", auth_params, options
+      end
+
+      # Delete a pull request comment.
+      #
+      # Requires authentication.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name. 
+      # @param number [Integer] Comment number.
+      # @see http://developer.github.com/v3/pulls/comments/#delete-a-comment
+      # @example
+      #   client.delete_pull_request_comment('caseyscarborough', 'github', 1242348)
+      def delete_pull_request_comment(owner, repo, number)
+        boolean_delete "/repos/#{owner}/#{repo}/pulls/comments/#{number}", auth_params
+      end
     end
 
   end
