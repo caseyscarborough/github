@@ -156,8 +156,8 @@ module GitHub
       #
       # @param id [Integer] The ID of the team.
       # @param team_name [String] The (new) name of the team.
-      # @options [Hash] Optional parameters.
-      # @options option [String] :permission (see create_team)
+      # @param options [Hash] Optional parameters.
+      # @option options [String] :permission (see create_team)
       # @return [Hash] Team information.
       # @see http://developer.github.com/v3/orgs/teams/#edit-team
       def edit_team(id, team_name, options={})

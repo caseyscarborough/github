@@ -148,7 +148,7 @@ module GitHub
       # @param owner [String] Repository owner.
       # @param repo [String] Repository name. 
       # @param number [Integer] Comment number.
-      # @retun [Hash] Comment information.
+      # @return [Hash] Comment information.
       # @see http://developer.github.com/v3/pulls/comments/#get-a-single-comment
       # @example
       #   GitHub.pull_request_comment('caseyscarborough', 'github', 1242348)
