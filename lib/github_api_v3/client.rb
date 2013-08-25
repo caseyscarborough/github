@@ -3,6 +3,7 @@ require 'github_api_v3/client/events'
 require 'github_api_v3/client/feeds'
 require 'github_api_v3/client/gists'
 require 'github_api_v3/client/gitignore'
+require 'github_api_v3/client/issues'
 require 'github_api_v3/client/markdown'
 require 'github_api_v3/client/orgs'
 require 'github_api_v3/client/pull_requests'
@@ -26,6 +27,7 @@ module GitHub
     include GitHub::Client::Feeds
     include GitHub::Client::Gitignore
     include GitHub::Client::Gists
+    include GitHub::Client::Issues
     include GitHub::Client::Markdown
     include GitHub::Client::Orgs
     include GitHub::Client::PullRequests
