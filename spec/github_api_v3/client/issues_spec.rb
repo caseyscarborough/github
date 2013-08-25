@@ -178,4 +178,24 @@ describe GitHub::Client::Issues do
     end
   end
 
+  describe '.issue_events', :vcr do
+    let(:response) { test_client.issue_events('api-test-organization', 'test-repo', 3) }
+
+    it 'returns a list of events' do
+      response.should be_instance_of Array
+    end
+  end
+
+  describe '.issue_event', :vcr do
+    let(:response) { test_client.issue_event('rails', 'rails', 1972333) }
+
+    it 'returns event information' do
+      response.should be_instance_of Hash
+    end
+
+    it 'returns the correct event' do
+      response.issue.title.should == "Rails is not Django"
+    end
+  end
+
 end

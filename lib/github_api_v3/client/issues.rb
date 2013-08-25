@@ -214,6 +214,27 @@ module GitHub
         boolean_request :delete, "/repos/#{owner}/#{repo}/issues/comments/#{id}"
       end
 
+      # List events for an issue.
+      #
+      # @param owner [String] The repository owner's username.
+      # @param repo [String] The repository name.
+      # @param number [Integer] The issue number.
+      # @return [Array] List of events.
+      # @see http://developer.github.com/v3/issues/events/#list-events-for-an-issue
+      def issue_events(owner, repo, number)
+        get "/repos/#{owner}/#{repo}/issues/#{number}/events"
+      end
+
+      # Get a single issue event.
+      #
+      # @param owner [String] The repository owner's username.
+      # @param repo [String] The repository name.
+      # @param id [Integer] The event ID.
+      # @see http://developer.github.com/v3/issues/events/#get-a-single-event
+      def issue_event(owner, repo, id)
+        get "/repos/#{owner}/#{repo}/issues/events/#{id}"
+      end
+
     end
   end
 end
