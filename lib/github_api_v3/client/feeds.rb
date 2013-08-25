@@ -3,7 +3,7 @@ module GitHub
 
     # Methods for the Feeds API, which looks pretty much useless.
     #
-    # http://developer.github.com/v3/activity/feeds/
+    # @see http://developer.github.com/v3/activity/feeds/
     module Feeds
 
       # List feeds.
