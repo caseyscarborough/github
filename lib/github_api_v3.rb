@@ -8,8 +8,8 @@ module GitHub
 
   class << self
     
-    def client
-      @client = Client.new unless @client
+    def client(options={})
+      @client = Client.new(options) unless @client
       @client
     end
 
