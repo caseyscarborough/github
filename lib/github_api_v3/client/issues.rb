@@ -139,11 +139,79 @@ module GitHub
       # @option options [String] :state open or closed
       # @option options [Integer] :milestone The milestone to associate the issue with (must have push access).
       # @option options [Array] :labels Array of strings of labels to associate with this issue.
+      # @return [Hash] Issue information.
       # @see http://developer.github.com/v3/issues/#edit-an-issue
       # @example
       #   client.edit_issue('caseyscarborough', 'github', 3, body: 'This is the body.', state: 'closed')
       def edit_issue(owner, repo, number, options={})
         patch "/repos/#{owner}/#{repo}/issues/#{number}", body: options
+      end
+
+      # List comments on an issue.
+      #
+      # @param owner [String] The repository owner's username.
+      # @param repo [String] The repository name.
+      # @param number [Integer] The issue number.
+      # @return [Array] A list of issue comments.
+      # @see http://developer.github.com/v3/issues/comments/#list-comments-on-an-issue
+      def issue_comments(owner, repo, number)
+        get "/repos/#{owner}/#{repo}/issues/#{number}/comments"
+      end
+
+      # List all issues comments for a repository.
+      #
+      # @param owner [String] The repository owner's username.
+      # @param repo [String] The repository name.
+      # @return [Array] A list of issue comments.
+      # @see http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository
+      def issues_comments(owner, repo)
+        get "/repos/#{owner}/#{repo}/issues/comments"
+      end
+
+      # Get a single issue comment.
+      #
+      # @param owner [String] The repository owner's username.
+      # @param repo [String] The repository name.
+      # @param id [Integer] The comment ID.
+      # @return [Hash] The comment information.
+      # @see http://developer.github.com/v3/issues/comments/#get-a-single-comment
+      def issue_comment(owner, repo, id)
+        get "/repos/#{owner}/#{repo}/issues/comments/#{id}"
+      end
+
+      # Create a new issue comment.
+      #
+      # @param owner [String] The repository owner's username.
+      # @param repo [String] The repository name.
+      # @param number [Integer] The issue number.
+      # @param comment [String] The comment text.
+      # @return [Hash] The comment information.
+      # @see http://developer.github.com/v3/issues/comments/#create-a-comment
+      def create_issue_comment(owner, repo, number, comment)
+        post "/repos/#{owner}/#{repo}/issues/#{number}/comments", body: { body: comment }
+      end
+
+      # Edit an issue comment.
+      #
+      # @param owner [String] The repository owner's username.
+      # @param repo [String] The repository name.
+      # @param id [Integer] The comment ID.
+      # @param comment [String] The comment text.
+      # @return [Hash] The comment information.
+      # @see http://developer.github.com/v3/issues/comments/#edit-a-comment
+      def edit_issue_comment(owner, repo, id, comment)
+        patch "/repos/#{owner}/#{repo}/issues/comments/#{id}", body: { body: comment }
+      end
+
+      # Delete a comment.
+      #
+      # @param owner [String] The repository owner's username.
+      # @param repo [String] The repository name.
+      # @param id [Integer] The comment ID.
+      # @return [Boolean] True if successful, false if not.
+      # @see http://developer.github.com/v3/issues/comments/#delete-a-comment
+      def delete_issue_comment(owner, repo, id)
+        boolean_request :delete, "/repos/#{owner}/#{repo}/issues/comments/#{id}"
       end
 
     end
