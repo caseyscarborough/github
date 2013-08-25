@@ -112,6 +112,17 @@ module GitHub
         { 'Authorization' => "Basic #{encoded_auth}" }
       end
 
+      # Send an HTTP request.
+      #
+      # @param method [Symbol] The request type, such as :get, :put, or :post.
+      # @param url [String] The URL to send the request to.
+      # @param options [Hash] Optional parameters.
+      # @option options [Hash] :params URL parameters.
+      # @option options [Hash] :headers Headers to send with the request.
+      # @option options [Hash] :body Body of the request.
+      # @return [Array, Hash]
+      # @example POST request
+      #   request :post, 'http://example.com/users', params: { name: 'Casey' }, body: { example: 'example' }
       def request(method, url, options={})
         params  = options[:params]  || {}
         headers = options[:headers] || {}
@@ -123,6 +134,17 @@ module GitHub
         self.class.send(method, url, query: params, body: body.to_json, headers: headers)
       end
 
+      # Get a boolean response from an HTTP request.
+      #
+      # @param method [Symbol] The request type, such as :get, :put, or :post.
+      # @param url [String] The URL to send the request to.
+      # @param options [Hash] Optional parameters.
+      # @option options [Hash] :params URL parameters.
+      # @option options [Hash] :headers Headers to send with the request.
+      # @option options [Hash] :body Body of the request.
+      # @return [Boolean]
+      # @example DELETE Request
+      #   boolean_request :delete, 'http://example.com/users'
       def boolean_request(method, url, options={})
         response = request(method, url, options)
         response.code == 204
@@ -137,11 +159,22 @@ module GitHub
       # @return [HTTParty::Response]
       def handle_response(response)
         case response.code
+        when 400 then raise BadRequest
         when 401 then raise Unauthorized
-        when 403 then raise RateLimitExceeded
+        when 403 
+          if response.body =~ /rate limit/i
+            raise RateLimitExceeded
+          elsif response.body =~ /login attempts/i
+            raise LoginAttemptsExceeded
+          else
+            raise Forbidden
+          end
         when 404 then raise NotFound
-        when 400..500 then raise ClientError
-        when 500..600 then raise ServerError, response.code
+        when 400...500 then raise ClientError
+        when 500 then raise InternalServerError
+        when 502 then raise BadGateway
+        when 503 then raise ServiceUnavailable
+        when 500...600 then raise ServerError, response.code
         else
           response
         end
