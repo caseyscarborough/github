@@ -1,5 +1,6 @@
 require 'base64'
 require 'json'
+require 'github_api_v3/client/commits'
 require 'github_api_v3/client/events'
 require 'github_api_v3/client/feeds'
 require 'github_api_v3/client/gists'
@@ -26,6 +27,7 @@ module GitHub
     # Default base uri for the API functionality.
     base_uri Default::API_ENDPOINT
 
+    include GitHub::Client::Commits
     include GitHub::Client::Events
     include GitHub::Client::Feeds
     include GitHub::Client::Gitignore
