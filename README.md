@@ -96,6 +96,10 @@ client.notifications
 client.watching
 client.starring
 
+# Get a client's rate limit
+GitHub.rate_limit
+client.rate_limit
+
 # etc...
 ```
 You can find the available attributes [here](http://developer.github.com/v3/users/#get-a-single-user). Check the [Users documentation](http://rdoc.info/gems/github_api_v3/GitHub/Client/Users) for the gem for a complete list and more examples.
