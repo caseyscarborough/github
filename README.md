@@ -24,7 +24,7 @@ require 'github_api_v3'
 
 ### Unauthenticated Requests
 
-There are multiple different unauthenticated requests to the API. These are performed when no credentials are given, and usually start with `GitHub`.
+There are multiple different unauthenticated requests to the API. These are performed when no credentials are given, and are shown below starting with `GitHub`. Unauthenticated methods can certainly be called from an authenticated client, and this is recommended as to not reach the hourly [rate limit](http://developer.github.com/v3/#rate-limiting).
 
 
 ### Authenticated Requests
@@ -32,7 +32,13 @@ There are multiple different unauthenticated requests to the API. These are perf
 Some methods, such as retrieving private repos or emails, require authentication. To create one of these requests, you'll need to pass in your login and access token. You can create a personal access token on your [account page](https://github.com/settings/applications).
 
 ```ruby
-client = GitHub::Client.new(login: 'username', access_token: 'abcdefghijklmnopqrstuvwxyz12345')
+# Create a new client using username and access token.
+client = GitHub.client(
+  :login => 'username',
+  :access_token => 'bf215181b5140522137b3d4f6b73544a'
+)
+
+# Authenticated methods
 client.emails # => ["email@example.com", "email2@example.com"]
 client.repos  # => #<Array:0x007fb8aa0d1a00>
 client.follow('matz') # => true
@@ -179,9 +185,9 @@ GitHub.gist(1234567)
 
 # Create a gist
 client.create_gist(
-  files: {"file1.txt" => { content: "File contents" }}, 
-  description: "Gist description", 
-  public: "false"
+  :files => { "file1.txt" => { content: "File contents" } }, 
+  :description => "Gist description", 
+  :public => "false"
 )
 
 # Check if a gist is starred
@@ -241,7 +247,7 @@ $ rspec spec/
 
 ## To Do
 
-The better question is... What's not to do? Any functionality of the API listed at [developer.github.com](http://developer.github.com/) that isn't currently in effect.
+Any functionality of the API listed at [developer.github.com](http://developer.github.com/) that hasn't currently been implemented.
 
 Some main missing functionality:
 * A good bit of the [Repos API](http://developer.github.com/v3/repos/), such as:
