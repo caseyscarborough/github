@@ -109,8 +109,7 @@ module GitHub
 
       def basic_auth_headers
         encoded_auth = Base64.encode64("#{@login}:#{@password}")
-        headers = {'Authorization' => 'Basic %s' % encoded_auth}
-        headers
+        { 'Authorization' => "Basic #{encoded_auth}" }
       end
 
       def request(method, url, options={})

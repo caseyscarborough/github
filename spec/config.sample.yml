@@ -1,3 +1,5 @@
 test_login: "username"
 test_password: "password"
-test_access_token: "asdfjksdfkjsdfkjsdfoweroioi123123213123"
+test_access_token: "7a329f6057f13c496ecf7fd777ceb9e79ae285"
+test_client_id: "ab0487b031b18f9286a6"
+test_client_secret: "9d667c2b7fae7a329f32b6df17926154"
