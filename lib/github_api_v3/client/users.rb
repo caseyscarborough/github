@@ -299,6 +299,18 @@
         end
       end
 
+      # Get the current client's rate limit info.
+      #
+      # @return [Hash] The rate limit information.
+      # @see http://developer.github.com/v3/rate_limit/
+      # @example Unauthenticated client's rate limit.
+      #   GitHub.rate_limit
+      # @example Authenticated client's rate limit.
+      #   client.rate_limit
+      def rate_limit
+        get "/rate_limit", auth_params
+      end
+
     end
   
   end

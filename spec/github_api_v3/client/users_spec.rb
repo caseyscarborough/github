@@ -179,4 +179,20 @@ describe GitHub::Client::Users do
     end
   end
 
+  describe '.rate_limit', :vcr do
+    let(:response) { GitHub.rate_limit }
+    let(:auth_response) { test_client.rate_limit }
+
+    it 'returns unauthenticated rate limit information' do
+      response.should be_instance_of Hash
+      response.rate.limit.should == 60
+    end
+
+    it 'returns authenticated rate limit information' do
+      auth_response.should be_instance_of Hash
+      auth_response.rate.limit.should == 5000
+    end
+
+  end
+
 end
