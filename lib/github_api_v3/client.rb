@@ -51,96 +51,46 @@ module GitHub
       # Perform a get request.
       #
       # @return [Hash, Array, String]
-      def get(url, params={}, headers={})
-        response = self.class.get url, query: params, headers: headers
+      def get(url, options={})
+        response = request :get, url, options
         handle_response(response)
         response.parsed_response
-      end
-
-      # Perform a get request with boolean return type.
-      #
-      # @return [Boolean]
-      def boolean_get(url, params={})
-        response = self.class.get url, query: params
-        response.code == 204
-      rescue GitHub::NotFound
-        false
       end
 
       # Perform a put request.
       #
       # @return [Hash, Array, String]
-      def put(url, params={}, body={})
-        response = self.class.put url, query: params, body: body.to_json
+      def put(url, options={})
+        response = request :put, url, options
         handle_response(response)
         response.parsed_response
-      end
-
-      # Perform a put request with boolean return type.
-      #
-      # @return [Boolean]
-      def boolean_put(url, params={}, body={})
-        response = self.class.put url, query: params, body: body.to_json
-        response.code == 204
-      rescue GitHub::NotFound
-        false
       end
 
       # Perform a post request.
       #
       # @return [Hash, Array, String]
-      def post(url, params={}, body={}, headers={})
-        response = self.class.post url, query: params, body: body.to_json, headers: headers
+      def post(url, options={})
+        response = request :post, url, options
         handle_response(response)
         response.parsed_response
-      end
-
-      # Perform a post request with boolean return type.
-      #
-      # @return [Boolean]
-      def boolean_post(url, params={}, body={})
-        response = self.class.post url, query: params, body: body.to_json
-        response.code == 204
-      rescue GitHub::NotFound
-        false
       end
 
       # Perform a patch request.
       #
       # @return [Hash, Array, String]
-      def patch(url, params={}, body={}, headers={})
-        response = self.class.patch url, query: params, body: body.to_json, headers: headers
+      def patch(url, options={})
+        response = request :patch, url, options
         handle_response(response)
         response.parsed_response
-      end
-
-      # Perform a patch request with boolean return type.
-      #
-      # @return [Boolean]
-      def boolean_patch(url, params={}, body={})
-        response = self.class.patch url, query: params, body: body.to_json
-        response.code == 204
-      rescue GitHub::NotFound
-        false
       end
 
       # Perform a delete request.
       #
       # @return [Hash, Array, String]
-      def delete(url, params={}, headers={})
-        response = self.class.delete url, query: params, headers: headers
+      def delete(url, options={})
+        response = request :delete, url, options
         handle_response(response)
         response.parsed_response
-      end
-
-      # Perform a delete request with boolean return type.
-      #
-      # @return [Boolean]
-      def boolean_delete(url, params={}, headers={})
-        response = self.class.delete url, query: params, headers: headers
-        response.code == 204
-      rescue GitHub::NotFound
-        false
       end
 
       # Return a hash with client's login and password.
@@ -157,10 +107,28 @@ module GitHub
         @login.nil? ? {} : { login: @login, access_token: @access_token }
       end
 
-      def basic_auth_headers(login=@login, password=@password)
-        encoded_auth = Base64.encode64("#{login}:#{password}")
+      def basic_auth_headers
+        encoded_auth = Base64.encode64("#{@login}:#{@password}")
         headers = {'Authorization' => 'Basic %s' % encoded_auth}
         headers
+      end
+
+      def request(method, url, options={})
+        params  = options[:params]  || {}
+        headers = options[:headers] || {}
+        body    = options[:body]    || {}
+
+        params.merge!(auth_params)
+        headers.merge!(basic_auth_headers) if @login && @password
+
+        self.class.send(method, url, query: params, body: body.to_json, headers: headers)
+      end
+
+      def boolean_request(method, url, options={})
+        response = request(method, url, options)
+        response.code == 204
+      rescue GitHub::NotFound
+        false
       end
 
       # Handle HTTP responses.

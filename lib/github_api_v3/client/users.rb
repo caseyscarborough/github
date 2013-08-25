@@ -21,7 +21,7 @@
         if username
           get "/users/#{username}"
         else
-          get '/user', auth_params
+          get '/user'
         end
       end
 
@@ -41,7 +41,7 @@
       #   client = GitHub::Client.new(login: 'username', access_token: 'abcdefghijklmnopqrstuvwxyz12345')
       #   client.emails # => ["email@example.com", "email2@example.com"]
       def emails
-        get '/user/emails', auth_params
+        get '/user/emails'
       end
 
       # Follow a user.
@@ -54,7 +54,7 @@
       # @example
       #   client.follow('caseyscarborough')
       def follow(username)
-        boolean_put "/user/following/#{username}", auth_params
+        boolean_request :put, "/user/following/#{username}"
       end
 
       # Checks to see if a user is following another user.
@@ -66,8 +66,7 @@
       # @example
       #   GitHub.follows?('caseyscarborough', 'matz')
       def follows?(username, target_username)
-        response = self.class.get "/users/#{username}/following/#{target_username}"
-        response.code == 204
+        boolean_request :get, "/users/#{username}/following/#{target_username}"
       end
 
       # List a user's followers.
@@ -87,7 +86,7 @@
         if username
           get "/users/#{username}/followers"
         else
-          get '/user/followers', auth_params
+          get '/user/followers'
         end
       end
 
@@ -111,8 +110,7 @@
       # @example
       #   client.following?('caseyscarborough')
       def following?(username)
-        response = self.class.get "/user/following/#{username}", query: auth_params
-        response.code == 204
+        boolean_request :get, "/user/following/#{username}"
       end
 
       # Unfollow a user.
@@ -124,7 +122,7 @@
       # @example
       #   client.unfollow('matz')
       def unfollow(username)
-        boolean_delete "/user/following/#{username}", auth_params
+        boolean_request :delete, "/user/following/#{username}"
       end
 
       # Get a list of public keys for a user.
@@ -141,7 +139,7 @@
         if username
           get "/users/#{username}/keys"
         else
-          get '/user/keys', auth_params
+          get '/user/keys'
         end
       end
 
@@ -154,7 +152,7 @@
       # @example
       #   client.key(123)
       def key(id)
-        get "/user/keys/#{id}", auth_params
+        get "/user/keys/#{id}"
       end
 
       # Create a public key.
@@ -168,7 +166,7 @@
       # @example
       #   client.create_key('octocat@octomac', 'ssh-rsa AAA...')
       def create_key(title, key)
-        post '/user/keys', auth_params, {title: title, key: key}
+        post '/user/keys', body: {title: title, key: key}
       end
 
       # Update a public key
@@ -183,7 +181,7 @@
       # @example
       #   client.update_key(1, 'octocat@octomac', 'ssh-rsa AAA...')
       def update_key(id, title, key)
-        patch "/user/keys/#{id}", auth_params, {title: title, key: key}
+        patch "/user/keys/#{id}", body: {title: title, key: key}
       end
 
       # Remove a public key from a user's account.
@@ -195,7 +193,7 @@
       # @example
       #   client.delete_key(123)
       def delete_key(id)
-        boolean_delete "/user/keys/#{id}", auth_params
+        boolean_request :delete, "/user/keys/#{id}"
       end
 
       # List notifications.
@@ -211,7 +209,7 @@
       # @example
       #   client.notifications
       def notifications(options={})
-        get "/notifications", auth_params.merge(options)
+        get "/notifications", params: options
       end
 
       # List notifications for a repository.
@@ -229,7 +227,7 @@
       # @example
       #   client.repo_notifications('caseyscarborough','github')
       def repo_notifications(owner, repo, options={})
-        get "/repos/#{owner}/#{repo}/notifications", auth_params
+        get "/repos/#{owner}/#{repo}/notifications"
       end
 
       # List repositories a user is starring.
@@ -247,7 +245,7 @@
         if username
           get "/users/#{username}/starred"
         else
-          get "/user/starred", auth_params
+          get "/user/starred"
         end
       end
 
@@ -262,7 +260,7 @@
       # @example
       #   client.starring?('caseyscarborough','github')
       def starring?(owner, repo)
-        boolean_get "/user/starred/#{owner}/#{repo}", auth_params
+        boolean_request :get, "/user/starred/#{owner}/#{repo}"
       end
 
       # List repositories a user is watching.
@@ -278,7 +276,7 @@
         if username
           get "/users/#{username}/subscriptions"
         else
-          get "/user/subscriptions", auth_params
+          get "/user/subscriptions"
         end
       end
 
@@ -295,7 +293,7 @@
         if username
           get "/users/#{username}/orgs"
         else
-          get "/user/orgs", auth_params
+          get "/user/orgs"
         end
       end
 
@@ -308,7 +306,7 @@
       # @example Authenticated client's rate limit.
       #   client.rate_limit
       def rate_limit
-        get "/rate_limit", auth_params
+        get "/rate_limit"
       end
 
     end

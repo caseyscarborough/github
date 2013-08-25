@@ -52,7 +52,7 @@ module GitHub
       #   client.create_gist(files: {"file1.txt" => { content: "File contents" }}, description: "Gist description", public: "false")
       def create_gist(files={}, options={:public => true})
         options.merge!(files)
-        post "/gists", auth_params, options
+        post "/gists", body: options
       end
 
       # Edit a gist
@@ -67,7 +67,7 @@ module GitHub
       # @return [Hash] Gist information.
       def edit_gist(id, files={}, options={:public => true})
         options.merge!(files)
-        patch "/gists/#{id}", auth_params, options
+        patch "/gists/#{id}", body: options
       end
 
       # Check if a gist is starred.
@@ -78,7 +78,7 @@ module GitHub
       # @return [Boolean] True if it is starred, false if not.
       # @see http://developer.github.com/v3/gists/#check-if-a-gist-is-starred
       def gist_starred?(id)
-        boolean_get "/gists/#{id}/star", auth_params
+        boolean_request :get, "/gists/#{id}/star"
       end
 
       # Star a gist.
@@ -91,7 +91,7 @@ module GitHub
       # @example
       #   client.star_gist(5928712)
       def star_gist(id)
-        boolean_put "/gists/#{id}/star", auth_params
+        boolean_request :put, "/gists/#{id}/star"
       end
 
       # Unstar a gist.
@@ -104,7 +104,7 @@ module GitHub
       # @example
       #   client.unstar_gist(5928712)
       def unstar_gist(id)
-        boolean_delete "/gists/#{id}/star", auth_params
+        boolean_request :delete, "/gists/#{id}/star"
       end
 
       # Fork a gist.
@@ -117,7 +117,7 @@ module GitHub
       # @example
       #   client.fork_gist(5928712)
       def fork_gist(id)
-        boolean_post "/gists/#{id}/fork", auth_params, {}
+        boolean_request :post, "/gists/#{id}/fork"
       end
 
       # Delete a gist.
@@ -129,7 +129,7 @@ module GitHub
       # @example
       #   client.delete_gist(5928712)
       def delete_gist(id)
-        boolean_delete "/gists/#{id}", auth_params
+        boolean_request :delete, "/gists/#{id}"
       end
 
       # List comments on a gist.
@@ -166,7 +166,7 @@ module GitHub
       # @example
       #   client.create_gist_comment(5928712, 'Awesome!')
       def create_gist_comment(id, comment)
-        post "/gists/#{id}/comments", auth_params, { body: comment }
+        post "/gists/#{id}/comments", body: { body: comment }
       end
 
       # Edit an existing gist comment.
@@ -181,7 +181,7 @@ module GitHub
       # @example
       #   client.edit_gist_comment(5928712, 889239, 'Even more awesome!')
       def edit_gist_comment(id, comment_id, comment)
-        patch "/gists/#{id}/comments/#{comment_id}", auth_params, { body: comment }
+        patch "/gists/#{id}/comments/#{comment_id}", body: { body: comment }
       end
 
       # Delete a gist comment.
@@ -195,7 +195,7 @@ module GitHub
       # @example
       #   client.delete_gist_comment(5928712, 889239)
       def delete_gist_comment(id, comment_id)
-        boolean_delete "/gists/#{id}/comments/#{comment_id}", auth_params
+        boolean_request :delete, "/gists/#{id}/comments/#{comment_id}"
       end
       
     end

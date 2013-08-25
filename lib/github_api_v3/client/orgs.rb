@@ -14,7 +14,7 @@ module GitHub
       # @example
       #   GitHub.organization('github')
       def organization(org)
-        get "/orgs/#{org}", auth_params
+        get "/orgs/#{org}"
       end
 
       # Edit an organization.
@@ -33,7 +33,7 @@ module GitHub
       # @example
       #   client.edit_organization('facebook',name:'faceeebooook',location:'California')
       def edit_organization(org, options={})
-        patch "/orgs/#{org}", auth_params, options
+        patch "/orgs/#{org}", body: options
       end
 
       # List all users who are members of an organization.
@@ -42,7 +42,7 @@ module GitHub
       # @return [Array] Array of members.
       # @see http://developer.github.com/v3/orgs/members/#members-list
       def organization_members(org)
-        get "/orgs/#{org}/members", auth_params
+        get "/orgs/#{org}/members"
       end
 
       # Check if a user is, publicly or privately, a member of the organization.
@@ -52,7 +52,7 @@ module GitHub
       # @return [Boolean] True if user is a member, false if not.
       # @see http://developer.github.com/v3/orgs/members/#check-membership
       def organization_member?(org, username)
-        boolean_get "/orgs/#{org}/members/#{username}", auth_params
+        boolean_request :get, "/orgs/#{org}/members/#{username}"
       end
 
       # Retrieve public members of an organization.
@@ -61,7 +61,7 @@ module GitHub
       # @return [Array] Array of members.
       # @see http://developer.github.com/v3/orgs/members/#public-members-list
       def organization_public_members(org)
-        get "/orgs/#{org}/public_members", auth_params
+        get "/orgs/#{org}/public_members"
       end
 
       # Remove member from an organization.
@@ -73,7 +73,7 @@ module GitHub
       # @return [Boolean] True if user is a member, false if not.
       # @see http://developer.github.com/v3/orgs/members/#remove-a-member
       def remove_organization_member(org, username)
-        boolean_delete "/orgs/#{org}/members/#{username}", auth_params
+        boolean_request :delete, "/orgs/#{org}/members/#{username}"
       end
 
       # Check if a user is publicly a member of the organization.
@@ -82,7 +82,7 @@ module GitHub
       # @return [Array] Array of members.
       # @see http://developer.github.com/v3/orgs/members/#check-public-membership
       def organization_public_member?(org, username)
-        boolean_get "/orgs/#{org}/public_members/#{username}", auth_params
+        boolean_request :get, "/orgs/#{org}/public_members/#{username}"
       end
 
       # Make a user's organization membership public.
@@ -94,7 +94,7 @@ module GitHub
       # @return [Boolean] True if successful, false if not.
       # @see http://developer.github.com/v3/orgs/members/#publicize-a-users-membership
       def publicize_membership(org, username)
-        boolean_put "/orgs/#{org}/public_members/#{username}", auth_params
+        boolean_request :put, "/orgs/#{org}/public_members/#{username}"
       end
 
       # Conceal a user's organization membership.
@@ -106,7 +106,7 @@ module GitHub
       # @return [Boolean] True if successful, false if not.
       # @see http://developer.github.com/v3/orgs/members/#conceal-a-users-membership
       def unpublicize_membership(org, username)
-        boolean_delete "/orgs/#{org}/public_members/#{username}", auth_params
+        boolean_request :delete, "/orgs/#{org}/public_members/#{username}"
       end
 
       # List an organizations teams.
@@ -117,7 +117,7 @@ module GitHub
       # @return [Array] Array of teams.
       # @see http://developer.github.com/v3/orgs/teams/#list-teams
       def teams(org)
-        get "/orgs/#{org}/teams", auth_params
+        get "/orgs/#{org}/teams"
       end
 
       # Get a team by its ID.
@@ -128,7 +128,7 @@ module GitHub
       # @return [Hash] Team information.
       # @see http://developer.github.com/v3/orgs/teams/#get-team
       def team(id)
-        get "/teams/#{id}", auth_params
+        get "/teams/#{id}"
       end
 
       # Create a team for an organization.
@@ -146,7 +146,7 @@ module GitHub
       # @see http://developer.github.com/v3/orgs/teams/#create-team
       def create_team(org, team_name, options={})
         options.merge!(name: team_name)
-        post "/orgs/#{org}/teams", auth_params, options
+        post "/orgs/#{org}/teams", body: options
       end
 
       # Edit a team.
@@ -162,7 +162,7 @@ module GitHub
       # @see http://developer.github.com/v3/orgs/teams/#edit-team
       def edit_team(id, team_name, options={})
         options.merge!(name: team_name)
-        patch "/teams/#{id}", auth_params, options
+        patch "/teams/#{id}", body: options
       end
 
       # Delete a team.
@@ -174,7 +174,7 @@ module GitHub
       # @return [Boolean] True if successful, false if not.
       # @see http://developer.github.com/v3/orgs/teams/#delete-team
       def delete_team(id)
-        boolean_delete "/teams/#{id}", auth_params
+        boolean_request :delete, "/teams/#{id}"
       end
 
       # List team members
@@ -186,7 +186,7 @@ module GitHub
       # @return [Array] Array of members.
       # @see http://developer.github.com/v3/orgs/teams/#list-team-members
       def team_members(id)
-        get "/teams/#{id}/members", auth_params
+        get "/teams/#{id}/members"
       end
 
       # Determine if a user is a team member.
@@ -199,7 +199,7 @@ module GitHub
       # @return [Boolean] True if member, false if not.
       # @see http://developer.github.com/v3/orgs/teams/#get-team-member
       def team_member?(id, username)
-        boolean_get "/teams/#{id}/members/#{username}", auth_params
+        boolean_request :get, "/teams/#{id}/members/#{username}"
       end
 
       # Add a member to a team.
@@ -213,7 +213,7 @@ module GitHub
       # @return [Boolean] True if successful, false if not.
       # @see http://developer.github.com/v3/orgs/teams/#add-team-member
       def add_team_member(id, username)
-        boolean_put "/teams/#{id}/members/#{username}", auth_params
+        boolean_request :put, "/teams/#{id}/members/#{username}"
       end
       alias :add_organization_member :add_team_member
 
@@ -227,7 +227,7 @@ module GitHub
       # @return [Boolean] True if successful, false if not.
       # @see http://developer.github.com/v3/orgs/teams/#remove-team-member
       def remove_team_member(id, username)
-        boolean_delete "/teams/#{id}/members/#{username}", auth_params
+        boolean_request :delete, "/teams/#{id}/members/#{username}"
       end
 
       # List all repositories for a team.
@@ -238,7 +238,7 @@ module GitHub
       # @return [Boolean] True if successful, false if not.
       # @see http://developer.github.com/v3/orgs/teams/#list-team-repos
       def team_repos(id)
-        get "/teams/#{id}/repos", auth_params
+        get "/teams/#{id}/repos"
       end
 
       # Determine if a repo is managed by a team.
@@ -251,7 +251,7 @@ module GitHub
       # @return [Boolean] True if it is managed by the team, false if not.
       # @see http://developer.github.com/v3/orgs/teams/#get-team-repo
       def team_repo?(id, owner, repo)
-        boolean_get "/teams/#{id}/repos/#{owner}/#{repo}", auth_params
+        boolean_request :get, "/teams/#{id}/repos/#{owner}/#{repo}"
       end
 
       # Add a team repository.
@@ -267,7 +267,7 @@ module GitHub
       # @return [Boolean] True if successful, false if not.
       # @see http://developer.github.com/v3/orgs/teams/#add-team-repo
       def add_team_repo(id, org, repo)
-        boolean_put "/teams/#{id}/repos/#{org}/#{repo}", auth_params
+        boolean_request :put, "/teams/#{id}/repos/#{org}/#{repo}"
       end
 
       # Remove a team repository.
@@ -281,7 +281,7 @@ module GitHub
       # @return [Boolean] True if successful, false if not.
       # @see http://developer.github.com/v3/orgs/teams/#remove-team-repo
       def remove_team_repo(id, owner, repo)
-        boolean_delete "/teams/#{id}/repos/#{owner}/#{repo}", auth_params
+        boolean_request :delete, "/teams/#{id}/repos/#{owner}/#{repo}"
       end
 
     end

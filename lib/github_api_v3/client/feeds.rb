@@ -12,7 +12,7 @@ module GitHub
       # @return [Hash] Feed information.
       # @see http://developer.github.com/v3/activity/feeds/#list-feeds
       def feeds
-        get "/feeds", auth_params
+        get "/feeds"
       end
 
     end

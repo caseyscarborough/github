@@ -13,7 +13,7 @@ module GitHub
       # @return [Array] List of authorizations.
       # @see http://developer.github.com/v3/oauth/#list-your-authorizations
       def authorizations
-        get "/authorizations", auth_params, basic_auth_headers
+        get "/authorizations"
       end
 
       # Get a single authorization.
@@ -24,7 +24,7 @@ module GitHub
       # @return [Hash] The authorization information.
       # @see http://developer.github.com/v3/oauth/#get-a-single-authorization
       def authorization(id)
-        get "/authorizations/#{id}", auth_params, basic_auth_headers
+        get "/authorizations/#{id}"
       end
 
       # Create a new authorization.
@@ -40,7 +40,7 @@ module GitHub
       # @return [Hash] The new OAuth token information.
       # @see http://developer.github.com/v3/oauth/#create-a-new-authorization
       def create_authorization(options={})
-        post "/authorizations", auth_params, options, basic_auth_headers
+        post "/authorizations", body: options
       end
 
       # Update an existing authorization.
@@ -57,7 +57,7 @@ module GitHub
       # @return [Hash] The updated OAuth token information.      
       # @see http://developer.github.com/v3/oauth/#update-an-existing-authorization
       def update_authorization(id, options={})
-        patch "/authorizations/#{id}", auth_params, options, basic_auth_headers
+        patch "/authorizations/#{id}", body: options
       end
 
       # Delete an authorization
@@ -68,7 +68,7 @@ module GitHub
       # @return [Boolean] True if successful, false if not.
       # @see http://developer.github.com/v3/oauth/#delete-an-authorization
       def delete_authorization(id)
-        boolean_delete "/authorizations/#{id}", auth_params, basic_auth_headers
+        boolean_request :delete, "/authorizations/#{id}"
       end
 
       # def check_authorization(client_id, client_secret, access_token)

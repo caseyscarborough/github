@@ -22,7 +22,7 @@ module GitHub
       # @example
       #   client.issues(:filter => 'created', :state => 'closed', :sort => 'updated')
       def issues(options={})
-        get '/issues', auth_params.merge(options)
+        get '/issues', params: options
       end
 
       # List all issues across owned and member repositories for the authenticated user.
@@ -41,7 +41,7 @@ module GitHub
       # @example
       #   client.user_issues(:filter => 'created')
       def user_issues(options={})
-        get '/user/issues', auth_params.merge(options)
+        get '/user/issues', params: options
       end
 
       # List all issues for a given organization for the authenticated user.
@@ -61,7 +61,7 @@ module GitHub
       # @example
       #   client.org_issues('facebook', :filter => 'mentioned', :state => 'closed')
       def org_issues(org, options={})
-        get "/orgs/#{org}/issues", auth_params.merge(options)
+        get "/orgs/#{org}/issues", params: options
       end
 
       # List issues for a repository.
@@ -88,7 +88,7 @@ module GitHub
       #     :since => '2013-08-09T19:00:00-05:00'
       #   )
       def repo_issues(owner, repo, options={})
-        get "/repos/#{owner}/#{repo}/issues", auth_params
+        get "/repos/#{owner}/#{repo}/issues"
       end
 
       # Get a single issue.
@@ -101,7 +101,7 @@ module GitHub
       # @example
       #   client.issue('caseyscarborough', 'github', 123)
       def issue(owner, repo, number)
-        get "/repos/#{owner}/#{repo}/issues/#{number}", auth_params
+        get "/repos/#{owner}/#{repo}/issues/#{number}"
       end
 
       # Create an issue.
@@ -122,7 +122,7 @@ module GitHub
       #   client.create_issue('caseyscarborough', 'github', 'Found a bug', :assignee => 'caseyscarborough', :labels => ['label1', 'label2', 'label3'])
       def create_issue(owner, repo, title, options={})
         options.merge!(title: title)
-        post "/repos/#{owner}/#{repo}/issues", auth_params, options
+        post "/repos/#{owner}/#{repo}/issues", body: options
       end
 
       # Edit an issue.
@@ -143,9 +143,9 @@ module GitHub
       # @example
       #   client.edit_issue('caseyscarborough', 'github', 3, body: 'This is the body.', state: 'closed')
       def edit_issue(owner, repo, number, options={})
-        patch "/repos/#{owner}/#{repo}/issues/#{number}", auth_params, options
+        patch "/repos/#{owner}/#{repo}/issues/#{number}", body: options
       end
-      
+
     end
   end
 end

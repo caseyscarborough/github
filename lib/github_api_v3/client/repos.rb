@@ -13,7 +13,7 @@ module GitHub
       # @return [Array]
       # @see http://developer.github.com/v3/repos/#list-all-public-repositories
       def all_repos
-        get '/repositories', auth_params
+        get '/repositories'
       end
 
       # Get one repository.
@@ -25,7 +25,7 @@ module GitHub
       # @example
       #   GitHub.repo('caseyscarborough','github')
       def repo(owner, repo)
-        get "/repos/#{owner}/#{repo}", auth_params
+        get "/repos/#{owner}/#{repo}"
       end
 
       # Get all repositories for a user.
@@ -43,7 +43,7 @@ module GitHub
         if username
           get "/users/#{username}/repos"
         else
-          get '/user/repos', auth_params
+          get '/user/repos'
         end
       end
 
@@ -67,7 +67,7 @@ module GitHub
       # @example
       #   client.create_repo('new-repo', description: 'New repository.', private: true)
       def create_repo(name, options={})
-        post "/user/repos", auth_params, options.merge(name: name)
+        post "/user/repos", body: options.merge(name: name)
       end
 
       # Edit a repository.
@@ -91,7 +91,7 @@ module GitHub
       #   client.edit_repo('caseyscarborough','github', name: 'github', description: 'An awesome repository!')
       def edit_repo(owner, repo, options={})
         options[:name] = repo unless options[:name]
-        patch "/repos/#{owner}/#{repo}", auth_params, options
+        patch "/repos/#{owner}/#{repo}", body: options
       end
 
       # Delete a repository.
@@ -104,7 +104,7 @@ module GitHub
       # @example
       #   client.delete_repo('repo-name')
       def delete_repo(owner, repo)
-        boolean_delete "/repos/#{owner}/#{repo}", auth_params
+        boolean_request :delete, "/repos/#{owner}/#{repo}"
       end
 
       # Get organization repositories.
@@ -115,7 +115,7 @@ module GitHub
       # @example
       #   GitHub.org_repos('rails')
       def org_repos(org)
-        get "/orgs/#{org}/repos", auth_params
+        get "/orgs/#{org}/repos"
       end
 
       # List contributors for a repository.
@@ -127,7 +127,7 @@ module GitHub
       # @example
       #   GitHub.contributors('caseyscarborough','github')
       def contributors(owner, repo)
-        get "/repos/#{owner}/#{repo}/contributors", auth_params
+        get "/repos/#{owner}/#{repo}/contributors"
       end
 
       # List languages for a repository.
@@ -139,7 +139,7 @@ module GitHub
       # @example
       #   GitHub.languages('caseyscarborough','github')
       def languages(owner, repo)
-        get "/repos/#{owner}/#{repo}/languages", auth_params
+        get "/repos/#{owner}/#{repo}/languages"
       end
 
       # def teams(owner, repo)
@@ -155,7 +155,7 @@ module GitHub
       # @example
       #   GitHub.tags('caseyscarborough','github')
       def tags(owner, repo)
-        get "/repos/#{owner}/#{repo}/tags", auth_params
+        get "/repos/#{owner}/#{repo}/tags"
       end
 
       # List branches for a repository.
@@ -167,7 +167,7 @@ module GitHub
       # @example
       #   GitHub.branches('caseyscarborough','github')
       def branches(owner, repo)
-        get "/repos/#{owner}/#{repo}/branches", auth_params
+        get "/repos/#{owner}/#{repo}/branches"
       end
 
       # Get information about a branch.
@@ -179,7 +179,7 @@ module GitHub
       # @example
       #   GitHub.branch('caseyscarborough','github','master')
       def branch(owner, repo, branch)
-        get "/repos/#{owner}/#{repo}/branches/#{branch}", auth_params
+        get "/repos/#{owner}/#{repo}/branches/#{branch}"
       end
 
       # Get list of collaborators for a repository.
@@ -191,7 +191,7 @@ module GitHub
       # @example
       #   GitHub.collaborators('caseyscarborough','github')
       def collaborators(owner, repo)
-        get "/repos/#{owner}/#{repo}/collaborators", auth_params
+        get "/repos/#{owner}/#{repo}/collaborators"
       end
 
       # Determine if a user is a collaborator to a repository.
@@ -204,7 +204,7 @@ module GitHub
       # @example
       #   GitHub.collaborator?('caseyscarborough','github','caseyscarborough')
       def collaborator?(owner, repo, user)
-        boolean_get "/repos/#{owner}/#{repo}/collaborators/#{user}", auth_params
+        boolean_request :get, "/repos/#{owner}/#{repo}/collaborators/#{user}"
       end
 
       # Add a collaborator to a repository.
@@ -217,7 +217,7 @@ module GitHub
       # @return [Boolean] True if successful, false if not.
       # @see http://developer.github.com/v3/repos/collaborators/#add-collaborator
       def add_collaborator(owner, repo, user)
-        boolean_put "/repos/#{owner}/#{repo}/collaborators/#{user}", auth_params
+        boolean_request :put, "/repos/#{owner}/#{repo}/collaborators/#{user}"
       end
 
       # Remove a collaborator from a repository.
@@ -230,7 +230,7 @@ module GitHub
       # @return [Boolean] True if successful, false if not.
       # @see http://developer.github.com/v3/repos/collaborators/#remove-collaborator
       def remove_collaborator(owner, repo, user)
-        boolean_delete "/repos/#{owner}/#{repo}/collaborators/#{user}", auth_params
+        boolean_request :delete, "/repos/#{owner}/#{repo}/collaborators/#{user}"
       end
 
       # List Stargazers for a repository.
@@ -242,7 +242,7 @@ module GitHub
       # @example
       #   GitHub.stargazers('caseyscarborough','github')
       def stargazers(owner, repo)
-        get "/repos/#{owner}/#{repo}/stargazers", auth_params
+        get "/repos/#{owner}/#{repo}/stargazers"
       end
 
       # Star a repository.
@@ -254,7 +254,7 @@ module GitHub
       # @return [Boolean] True if successful, false if not.
       # @see http://developer.github.com/v3/activity/starring/#star-a-repository
       def star(owner, repo)
-        boolean_put "/user/starred/#{owner}/#{repo}", auth_params
+        boolean_request :put, "/user/starred/#{owner}/#{repo}"
       end
 
       # Unstar a repository.
@@ -266,7 +266,7 @@ module GitHub
       # @return [Boolean] True if successful, false if not.
       # @see http://developer.github.com/v3/activity/starring/#unstar-a-repository
       def unstar(owner, repo)
-        boolean_delete "/user/starred/#{owner}/#{repo}", auth_params
+        boolean_request :delete, "/user/starred/#{owner}/#{repo}"
       end
 
       # List Watchers for a repository.
@@ -276,7 +276,7 @@ module GitHub
       # @return [Array] List of users.
       # @see http://developer.github.com/v3/activity/watching/#list-watchers
       def watchers(owner, repo)
-        get "/repos/#{owner}/#{repo}/subscribers", auth_params
+        get "/repos/#{owner}/#{repo}/subscribers"
       end
 
       # Get subscription information.
@@ -290,7 +290,7 @@ module GitHub
       # @example
       #   client.subscription('caseyscarborough','github')
       def subscription(owner, repo)
-        get "/repos/#{owner}/#{repo}/subscription", auth_params
+        get "/repos/#{owner}/#{repo}/subscription"
       end
 
       # Set a repository subscription.
@@ -306,7 +306,7 @@ module GitHub
       def subscribe(owner, repo, options={})
         options[:subscribed] = true unless options[:subscribed]
         options[:ignored] = false unless options[:ignored]
-        put "/repos/#{owner}/#{repo}/subscription", auth_params, options
+        put "/repos/#{owner}/#{repo}/subscription", body: options
       end
 
       # Delete a repository subscription.
@@ -319,7 +319,7 @@ module GitHub
       # @example
       #   client.unsubscribe('caseyscarborough','github')
       def unsubscribe(owner, repo)
-        boolean_delete "/repos/#{owner}/#{repo}/subscription", auth_params
+        boolean_request :delete, "/repos/#{owner}/#{repo}/subscription"
       end
       
     end
