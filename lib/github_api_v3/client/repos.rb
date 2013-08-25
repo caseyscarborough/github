@@ -321,6 +321,27 @@ module GitHub
       def unsubscribe(owner, repo)
         boolean_request :delete, "/repos/#{owner}/#{repo}/subscription"
       end
+
+      # List available assignees (owner + collaborators) to which issues may be assigned.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name.
+      # @return [Array] List of assignees.
+      # @see http://developer.github.com/v3/issues/assignees/#list-assignees
+      def assignees(owner, repo)
+        get "/repos/#{owner}/#{repo}/assignees"
+      end
+
+      # Check to see if a particular user is an assignee for a repository.
+      #
+      # @param owner [String] Repository owner.
+      # @param repo [String] Repository name.
+      # @param assignee [String] Username for the assignee to check for.
+      # @return [Boolean] True if yes, false if no.
+      # @see http://developer.github.com/v3/issues/assignees/#check-assignee
+      def assignee?(owner, repo, assignee)
+        boolean_request :get, "/repos/#{owner}/#{repo}/assignees/#{assignee}"
+      end
       
     end
   end

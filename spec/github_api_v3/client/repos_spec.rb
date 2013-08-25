@@ -202,4 +202,28 @@ describe GitHub::Client::Repos do
     end
   end
 
+  describe '.assignees', :vcr do
+    let(:response) { test_client.assignees('caseyscarborough','github') }
+
+    it 'returns an array of assignees' do
+      response.should be_instance_of Array
+    end
+
+    it 'returns the correct information' do
+      response[0].login.should == 'caseyscarborough'
+    end
+  end
+
+  describe '.assignee?', :vcr do
+    it 'returns true when the user is an assignee' do
+      response = test_client.assignee?('caseyscarborough','github','caseyscarborough')
+      response.should be_true
+    end
+
+    it 'returns false when the user is an assignee' do
+      response = test_client.assignee?('caseyscarborough','github','random')
+      response.should be_false
+    end
+  end
+
 end
