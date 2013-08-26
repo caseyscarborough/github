@@ -2,36 +2,25 @@ require 'github_api_v3'
 require 'webmock/rspec'
 require 'vcr'
 
-RSpec.configure do |config|
-  config.treat_symbols_as_metadata_keys_with_true_values = true
-  config.run_all_when_everything_filtered = true
-  config.filter_run :focus
-  config.include WebMock::API
+RSpec.configure do |c|
+  c.treat_symbols_as_metadata_keys_with_true_values = true
+  c.run_all_when_everything_filtered = true
+  c.filter_run :focus
+  c.include WebMock::API
   
-  CONFIG = nil
   if File.exist?(File.expand_path('../config.yml', __FILE__))
-    CONFIG = YAML.load(File.read(File.expand_path('../config.yml', __FILE__)))    
+    config = YAML.load(File.read(File.expand_path('../config.yml', __FILE__)))    
+    config.each { |k,v| ENV[k] = v unless v.kind_of? Hash }
   end
 end
 
 VCR.configure do |c|
   c.configure_rspec_metadata!
-  
-  c.filter_sensitive_data("<TEST_ACCESS_TOKEN>") do
-    CONFIG ? CONFIG['test_access_token'] : ENV['GITHUB_API_V3_TEST_ACCESS_TOKEN']
-  end
-  c.filter_sensitive_data("<TEST_LOGIN>") do
-    CONFIG ? CONFIG['test_login'] : ENV['GITHUB_API_V3_TEST_LOGIN']
-  end
-  c.filter_sensitive_data("<TEST_PASSWORD>") do 
-    CONFIG ? CONFIG['test_password'] : ENV['GITHUB_API_V3_TEST_PASSWORD']
-  end
-  c.filter_sensitive_data("<TEST_CLIENT_ID>") do
-    CONFIG ? CONFIG['test_client_id'] : ENV['GITHUB_API_V3_TEST_CLIENT_ID']
-  end
-  c.filter_sensitive_data("<TEST_CLIENT_SECRET") do
-    CONFIG ? CONFIG['test_client_secret'] : ENV['GITHUB_API_V3_TEST_CLIENT_SECRET']
-  end
+  c.filter_sensitive_data("<TEST_ACCESS_TOKEN>") { ENV['GITHUB_API_V3_TEST_ACCESS_TOKEN'] }
+  c.filter_sensitive_data("<TEST_LOGIN>") { ENV['GITHUB_API_V3_TEST_LOGIN'] }
+  c.filter_sensitive_data("<TEST_PASSWORD>") { ENV['GITHUB_API_V3_TEST_PASSWORD'] }
+  c.filter_sensitive_data("<TEST_CLIENT_ID>") { ENV['GITHUB_API_V3_TEST_CLIENT_ID'] }
+  c.filter_sensitive_data("<TEST_CLIENT_SECRET>") { ENV['GITHUB_API_V3_TEST_CLIENT_SECRET'] }
   c.cassette_library_dir = 'spec/cassettes'
   c.default_cassette_options = {
     :serialize_with             => :json,
@@ -42,23 +31,23 @@ VCR.configure do |c|
 end
 
 def test_login
-  CONFIG ? CONFIG['test_login'] : ENV['GITHUB_API_V3_TEST_LOGIN']
+  ENV['GITHUB_API_V3_TEST_LOGIN']
 end
 
 def test_password
-  CONFIG ? CONFIG['test_password'] : ENV['GITHUB_API_V3_TEST_PASSWORD']
+  ENV['GITHUB_API_V3_TEST_PASSWORD']
 end
 
 def test_access_token
-  CONFIG ? CONFIG['test_access_token'] : ENV['GITHUB_API_V3_TEST_ACCESS_TOKEN']
+  ENV['GITHUB_API_V3_TEST_ACCESS_TOKEN']
 end
 
 def test_client_id
-  CONFIG ? CONFIG['test_client_id'] : ENV['GITHUB_API_V3_TEST_CLIENT_ID']
+  ENV['GITHUB_API_V3_TEST_CLIENT_ID']
 end
 
 def test_client_secret
-  CONFIG ? CONFIG['test_client_secret'] : ENV['GITHUB_API_V3_TEST_CLIENT_SECRET']
+  ENV['GITHUB_API_V3_TEST_CLIENT_SECRET']
 end
 
 def test_basic_client
