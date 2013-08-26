@@ -6,7 +6,7 @@ branches:
   - master
 script: bundle exec rspec spec
 env:
-  matrix:
+  global:
   - secure: iKEBnYvGMHfO2Vxi1AuQoyO7UqH6LXy2gxXvsWxJTbuesUB+Un3Qhh3bdnOfYvKXhzQaavY7KNIegQTbiYNgghufEyLl6zGwtPfbOrJoZSpndWEWkNadFEAby9QynoYG8XQ1jiYZBBPU3Ij7yNNhAm94RvjzLH06X7mxUuNyI+k=
   - secure: N2/+tBFDTeVV0r1VdDEZ0677JN/M0ZHqbyIBdSKRSXR3ly3F1yQu59RGW0l4TtbI5fSc/OSPEUHf4jZv0SsqD4lm8j5LXzXa+V3f176AU5LnriNLl1yG7vs+nZiNHICjySEoQ8vPmCuwxUvzoKCOY/CRGrokzq+NT6si6CRgWTM=
   - secure: PhJ4enaZUVKVCuQXLzGbAufpDvqri1LID463wVSiFRu4y7J9oxrrfYotyFCwXwsz+6MVJx8ZEYH7oGRhpf6F2Es6quE9kmITEcJoxpSYocZuptNh2aei3WCv/sX7fg1qdg3z9mn674HWTanj+wJMtWc1MJGrCZ7cTjVuLv4Do9c=
