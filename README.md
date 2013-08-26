@@ -2,11 +2,11 @@
 
 [![Gem Version](https://badge.fury.io/rb/github_api_v3.png)](http://badge.fury.io/rb/github_api_v3)
 
-This is a simple wrapper for GitHub's v3 API. Knowing a little about [GitHub's API](http://developer.github.com/) will aid in its use, but is not necessary.
+This is a simple and easy to use wrapper for GitHub's v3 API. Knowing a little about [GitHub's API](http://developer.github.com/) will aid in its use, but is not necessary. Nearly all methods of the API have been implemented, but there are a few left to go.
 
 ## Documentation
 
-Full documentation for the gem can be found at [rdoc.info/gems/github_api_v3/frames](http://rdoc.info/github/caseyscarborough/github/master/frames).
+Full documentation for the gem can be found at [rdoc.info/gems/github_api_v3/frames](http://rdoc.info/gems/github_api_v3/frames). I strongly recommend checking it out, as the library is very well documented.
 
 ## Installation
 
@@ -25,7 +25,6 @@ require 'github_api_v3'
 ### Unauthenticated Requests
 
 There are multiple different unauthenticated requests to the API. These are performed when no credentials are given, and are shown below starting with `GitHub`. Unauthenticated methods can certainly be called from an authenticated client, and this is recommended as to not reach the hourly [rate limit](http://developer.github.com/v3/#rate-limiting).
-
 
 ### Authenticated Requests
 
@@ -49,54 +48,57 @@ Anytime a method is shown below starting with `client`, it is an authenticated m
 
 ### Sample usage
 
+The following sections are some sample usages of the library for parts of the API that I consider to be very useful. The methods in this section are not comprehensive, but aim to give a nice overview of some usage of this library.
+
 #### Users
 
 The following are some sample usages of the Users module.
 
 ```ruby
-# Retrieve a single user
+# Retrieve a single user's information.
 user = GitHub.user('caseyscarborough')
 user.login     # => "caseyscarborough"
 user.name      # => "Casey Scarborough"
 user.html_url  # => "https://github.com/caseyscarborough"
 user.following # => 23
 
-# Retrieve an array of all GitHub users
+# Retrieve an array of all GitHub users.
 GitHub.users
 
-# Get emails for authenticated user
+# Retrieve all emails for an authenticated user.
 client.emails
 
-# Follow/unfollow a user
+# Follow/unfollow a user.
 client.follow('caseyscarborough')
 client.unfollow('caseyscarborough')
 
-# Check if a user follows another user
+# Check if a user follows another user.
 GitHub.follows?('caseyscarborough','matz')
 
-# Get a list of an unauthenticated user's followers
+# Get a list of an unauthenticated user's followers.
 GitHub.followers('caseyscarborough')
 
-# Get a list of an authenticated user's followers
+# Get a list of an authenticated user's followers.
 client.followers
 
-# Get a list of user's a user is following
+# Get a list of user's a user is following.
 GitHub.following('caseyscarborough')
 
-# See if authenticated user is following another user
+# Check if authenticated user is following another user.
 client.following?('caseyscarborough')
+# => true
 
-# Get events for a user
+# Retrieve events for a user.
 GitHub.events('caseyscarborough')
 
-# Get notifications for a user
+# Retrieve notifications for a user.
 client.notifications
 
-# Get repositories watching/starring for a user
+# Retrieve repositories watching/starring for a user.
 client.watching
 client.starring
 
-# Get a client's rate limit
+# Retrieve a client's rate limit.
 GitHub.rate_limit
 client.rate_limit
 
@@ -109,37 +111,37 @@ You can find the available attributes [here](http://developer.github.com/v3/user
 The following are some sample usages for the Repos module.
 
 ```ruby
-# Get repos for an unauthenticated/authenticated user
+# Retrieve repositories for an unauthenticated/authenticated user.
 GitHub.repos('caseyscarborough')
 client.repos
 
-# Get all public repos on GitHub
+# Retrieve all public repositories on GitHub.
 GitHub.all_repos
 
-# Get a specific repo
+# Retrieve a specific repository.
 GitHub.repo('owner','repo-name')
 
-# Create a repo
+# Create a new repository.
 client.create_repo('new-repo', description: 'New repository.', private: true)
 
-# Delete a repo
+# Delete a repository.
 client.delete_repo('repo-name')
 
-# Get a repository's contributors/languages/tags/branches/collaborators
+# Retrieve a repository's contributors/languages/tags/branches/collaborators.
 GitHub.contributors('caseyscarborough','github')
 GitHub.languages('caseyscarborough','github')
 GitHub.tags('caseyscarborough','github')
 GitHub.branches('caseyscarborough','github')
 GitHub.collaborators('caseyscarborough','github')
 
-# Get a specific branch
+# Get a specific branch from a repository (master shown below).
 GitHub.branch('caseyscarborough','github','master')
 
-# Add/remove collaborator
+# Add/remove collaborator from a repository.
 client.add_collaborator('owner','repo-name','user-to-add')
 client.remove_collaborator('owner','repo-name','user-to-remove')
 
-# Subscribe/unsubscribe/star/unstar a repository
+# Subscribe/unsubscribe/star/unstar a repository.
 client.subscribe('caseyscarborough','github')
 client.unsubscribe('caseyscarborough','github')
 client.star('caseyscarborough','github')
@@ -155,47 +157,54 @@ For a full list with descriptions, see the [Repos documentation](http://rdoc.inf
 The following are some sample usages of the Events module.
 
 ```ruby
-# Get all events for a user
+# Retrieve all events for a user.
 GitHub.user_events('caseyscarborough')
 
-# Get public events for a user
+# Retrieve all public events for a user.
 GitHub.public_user_events('caseyscarborough')
 
-# Get all public GitHub events
+# Retrieve all public GitHub events.
 GitHub.public_events
 
-# Get all events for a repository
+# Retrieve all events for a repository.
 GitHub.repo_events('owner','repo-name')
+
+# Retrieve public events for an organization.
+GitHub.organization_events('ruby')
 
 # etc...
 ```
+
+Check out the [Events documentation](http://rdoc.info/gems/github_api_v3/GitHub/Client/Events) for a comprehensive list of methods.
 
 #### Gists
 
 The following are sample uses for the Gists module.
 
 ```ruby
-# Get all gists for a user
+# Retrieve all gists for a user.
 GitHub.gists('caseyscarborough')
 
-# Get all gists for authenticated user
+# Retrieve all gists for the authenticated user.
 client.gists
 
-# Get all public gists
+# Retrieve all public gists.
 GitHub.gists
 
-# Get a gist by id
+# Retrieve a gist by it's ID.
 GitHub.gist(1234567)
 
-# Create a gist
+# Create a new gist.
 client.create_gist(
+  # Hash of files to include.
   :files => { "file1.txt" => { content: "File contents" } }, 
-  :description => "Gist description", 
+  :description => "Gist description.", 
   :public => "false"
 )
 
-# Check if a gist is starred
+# Check if a gist is starred.
 client.gist_starred?(1234567)
+# => true
 
 # Star/unstar/fork/delete a gist
 client.star_gist(1234567)
@@ -212,10 +221,10 @@ Check out the [Gist documentation](http://rdoc.info/gems/github_api_v3/GitHub/Cl
 You can render any markdown test using the markdown method.
 
 ```ruby
-# Render a string
+# Render a string to markdown.
 GitHub.markdown('# Markdown text!')
 
-# Render a file
+# Render a file's contents to markdown.
 GitHub.markdown(File.read('markdown.md'))
 ```
 
@@ -224,41 +233,141 @@ GitHub.markdown(File.read('markdown.md'))
 You can retrieve .gitignore templates using the Gitignore API as well.
 
 ```ruby
+# Retrieve a list of all available .gitignore templates.
 GitHub.gitignore_list
 # => ["Actionscript", "Android", "C", "C++", "CSharp"...]
 
-# Retrieve a specific template
+# Retrieve a specific template.
 GitHub.gitignore("Ruby")
 # => {"name"=>"Ruby", "source"=>"*.gem\n*.rbc\n.bundle...}
 ```
 
-## Running the Test Suite
+#### Authorizations
 
-Begin by renaming the config.sample.yml file to config.yml and add your information to it. You can get a proper authorization key by issuing the following command with your username and password:
+The Authorizations OAuth API requires that a user use _basic authentication_. This means that you'll need to instantiate a client using your username and password, as opposed to the username and access token. You'll then be able to use the Authorizations API methods on  that client. See below:
 
-```bash
-$ curl -i -u "username:password" https://api.github.com/authorizations \
-  -d '{"scopes":["delete_repo", "user", "public_repo", "repo", "gist"]}'
+```ruby
+client = GitHub.client(login: 'username', password: 'password')
+
+# List your authorizations.
+client.authorizations
+
+# Retrieve a single authorization by its ID.
+client.authorization(123)
+
+# Create a new authorization.
+client.create_authorization(
+  :note => 'New authorization',
+  # The authorized applications ID and secret
+  :client_id => 'ab0487b031b18f9286a6',
+  :client_secret => '9d667c2b7fae7a329f32b6df17926154'
+)
+
+# Update an existing authorization.
+client.update_authorization(
+  123, # The authorization's ID.
+  :note => 'Updated authorization',
+  :note_url => 'http://anyrandomurl.com'
+)
+
+# Delete an authorization by it's ID.
+client.delete_authorization(123)
 ```
 
-This will give you a `token` that you can add to config.yml.
+For a full overview of the Authorizations API check out the [OAuth documentation](http://rdoc.info/gems/github_api_v3/GitHub/Client/OAuth).
 
-The test suite can then be run by issuing the following command from the root of the directory:
+#### Contents API
 
-```bash
-$ rspec spec/
+The Contents API methods are used to retrieve, create, update, and delete files in a repository. File contents that are retrieved are Base64 encoded. Some example methods are shown below:
+
+```ruby
+# Get the contents of the README file.
+GitHub.contents('caseyscarborough', 'github')
+
+# Retrieve the contents of a file or directory.
+GitHub.contents(
+  'caseyscarborough', # Repository owner.
+  'github',           # Repository name.
+  'lib',              # File/directory path. Defaults to the root of repository.
+  'master'            # Reference or branch. Defaults to master.
+)
+
+# Create a new file.
+client.create_file(
+  'caseyscarborough',                    # Repository owner.
+  'github',                              # Repository name.
+  :path      => 'lib/new_file.txt',      # Path to file.
+  :message   => 'Add lib/new_file.txt.', # Commit message.
+  :content   => 'This is a test file.',  # File contents.
+  :committer => { :name => 'Casey Scarborough', :email => 'casey@example.com' }
+)
+
+# Update an existing file.
+client.update_file(
+  'caseyscarborough',                          # Repository owner.
+  'github',                                    # Repository name.
+  :path      => 'lib/update_file.txt',         # File path.
+  :message   => 'Update lib/update_file.txt.', # Commit message.
+  :content   => 'This is a test file.',        # New file contents.
+  :sha       => '329688480d39049927147c162b9d2deaf885005f', # SHA of file.
+  :committer => { :name => 'Casey Scarborough', :email => 'casey@example.com' }
+)
+
+# Delete an existing file.
+client.delete_file(
+  'caseyscarborough',                        # Repository owner.
+  'github',                                  # Repository name.
+  :path      => 'lib/delete_me.txt',         # File path.
+  :message   => 'Delete lib/delete_me.txt.', # Commit message.
+  :sha       => '329688480d39049927147c162b9d2deaf885005f', # SHA of file.
+  :committer => { :name => 'Casey Scarborough', :email => 'casey@example.com' }
+)
 ```
 
+As you can see, the Commits API methods are not as intuitive as the rest of the API, so the [documentation](http://rdoc.info/gems/github_api_v3/GitHub/Client/Contents) is very useful.
+
+#### Conclusion
+
+And if you've made it this far, you can check out the last method to get a little piece of random wisdom from GitHub.
+
+```ruby
+GitHub.octocat
+# =>
+          "MMM.           .MMM
+           MMMMMMMMMMMMMMMMMMM
+           MMMMMMMMMMMMMMMMMMM      _____________________
+          MMMMMMMMMMMMMMMMMMMMM    |                     |
+         MMMMMMMMMMMMMMMMMMMMMMM   | Design for failure. |
+        MMMMMMMMMMMMMMMMMMMMMMMM   |_   _________________|
+        MMMM::- -:::::::- -::MMMM    |/
+         MM~:~   ~:::::~   ~:~MM
+    .. MMMMM::. .:::+:::. .::MMMMM ..
+          .MM::::: ._. :::::MM.
+             MMMM;:::::;MMMM
+      -MM        MMMMMMM
+      ^  M+     MMMMMMMMM
+          MMMMMMM MM MM MM
+               MM MM MM MM
+               MM MM MM MM
+            .~~MM~MM~MM~MM~~.
+         ~~~~MM:~MM~~~MM~:MM~~~~
+        ~~~~~~==~==~~~==~==~~~~~~
+         ~~~~~~==~==~==~==~~~~~~
+             :~==~==~==~==~~"
+
+# Or create your own wisdom.
+GitHub.octocat('Wisdom.')
+```
 ## To Do
 
 Any functionality of the API listed at [developer.github.com](http://developer.github.com/) that hasn't currently been implemented.
 
 Some main missing functionality:
 * A good bit of the [Repos API](http://developer.github.com/v3/repos/), such as:
-  * Comments
-  * Commits
   * Hooks
   * Forks
+  * Keys
+  * Downloads
   * etc.
 
 ## Contributing
