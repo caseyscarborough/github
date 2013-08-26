@@ -7,8 +7,10 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
   config.include WebMock::API
-
-  CONFIG = YAML.load(File.read(File.expand_path('../config.yml', __FILE__)))
+  
+  if File.exist?(File.expand_path('../config.yml', __FILE__))
+    CONFIG = YAML.load(File.read(File.expand_path('../config.yml', __FILE__)))
+  end
 end
 
 VCR.configure do |c|
@@ -30,23 +32,23 @@ VCR.configure do |c|
 end
 
 def test_login
-  CONFIG['test_login']
+  CONFIG['test_login'] || ENV['GITHUB_API_V3_TEST_LOGIN']
 end
 
 def test_password
-  CONFIG['test_password']
+  CONFIG['test_password'] || ENV['GITHUB_API_V3_TEST_PASSWORD']
 end
 
 def test_access_token
-  CONFIG['test_access_token']
+  CONFIG['test_access_token'] || ENV['GITHUB_API_V3_TEST_ACCESS_TOKEN']
 end
 
 def test_client_id
-  CONFIG['test_client_id']
+  CONFIG['test_client_id'] || ENV['GITHUB_API_V3_TEST_CLIENT_ID']
 end
 
 def test_client_secret
-  CONFIG['test_client_secret']
+  CONFIG['test_client_secret'] || ENV['GITHUB_API_V3_TEST_CLIENT_SECRET']
 end
 
 def test_basic_client

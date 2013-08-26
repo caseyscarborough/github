@@ -1,9 +1,14 @@
 rvm:
-  - 1.9.3
-  - 2.0.0
-
+- 1.9.3
+- 2.0.0
 branches:
   only:
-    - master
-
+  - master
 script: bundle exec rspec spec
+env:
+  matrix:
+  - secure: iKEBnYvGMHfO2Vxi1AuQoyO7UqH6LXy2gxXvsWxJTbuesUB+Un3Qhh3bdnOfYvKXhzQaavY7KNIegQTbiYNgghufEyLl6zGwtPfbOrJoZSpndWEWkNadFEAby9QynoYG8XQ1jiYZBBPU3Ij7yNNhAm94RvjzLH06X7mxUuNyI+k=
+  - secure: N2/+tBFDTeVV0r1VdDEZ0677JN/M0ZHqbyIBdSKRSXR3ly3F1yQu59RGW0l4TtbI5fSc/OSPEUHf4jZv0SsqD4lm8j5LXzXa+V3f176AU5LnriNLl1yG7vs+nZiNHICjySEoQ8vPmCuwxUvzoKCOY/CRGrokzq+NT6si6CRgWTM=
+  - secure: PhJ4enaZUVKVCuQXLzGbAufpDvqri1LID463wVSiFRu4y7J9oxrrfYotyFCwXwsz+6MVJx8ZEYH7oGRhpf6F2Es6quE9kmITEcJoxpSYocZuptNh2aei3WCv/sX7fg1qdg3z9mn674HWTanj+wJMtWc1MJGrCZ7cTjVuLv4Do9c=
+  - secure: bRFWYOv0Pdn5X1mZNQ/ONIBIibdkzvPWyzuYH1UCbALjZChyRk7hXp4GXl9xfuNjfX/Hij+gxoWT5ydpJC5TqEdL1EbQ87Nj/V1iDGDRMclAJerllrHz9r7TPc+Bwlar3M+k3qPyOo9swXZ4uHaoop+5idkTUUvI9CH8htWMmis=
+  - secure: SVfElnaJ2beTc1ftha6DE5dBeMphdsi/aDcGMrB1GyL7oK8IbnYMkr9smdnV2h68PP09lXC7KDA2mhxy1uUUcsGw3gv5s+Pm9VAPalgbdCm4fp86ZWmVVmlOtdEpJghl7Joo49bA7T4YvKcLilqa99E5mGJLM4HBoZsoZrAEkwE=
