@@ -22,7 +22,7 @@ module GitHub
       #   client = GitHub.client(:login => 'caseyscarborough', :access_token => '7a329f6057f13c496ecf7fd777ceb9e79ae285')
       #   client.milestones('caseyscarborough', 'github', :state => 'closed', :sort => 'completeness')
       def milestones(owner, repo, options={})
-        get "/repos/#{owner}/#{repo}/milestones", params: options
+        get "/repos/#{owner}/#{repo}/milestones", :params => options
       end
 
       # Get a single milestone.
@@ -65,8 +65,8 @@ module GitHub
       #     :due_on => '2013-08-25T16:31:30-04:00'
       #   )
       def create_milestone(owner, repo, title, options={})
-        options.merge!(title: title)
-        post "/repos/#{owner}/#{repo}/milestones", body: options
+        options.merge!(:title => title)
+        post "/repos/#{owner}/#{repo}/milestones", :body => options
       end
 
       # Update a milestone.
@@ -95,8 +95,8 @@ module GitHub
       #     :due_on => '2013-08-25T16:31:30-04:00'
       #   )
       def update_milestone(owner, repo, number, options={})
-        options.merge!(number: number)
-        patch "/repos/#{owner}/#{repo}/milestones/#{number}", body: options
+        options.merge!(:number => number)
+        patch "/repos/#{owner}/#{repo}/milestones/#{number}", :body => options
       end
       alias :edit_milestone :update_milestone
 

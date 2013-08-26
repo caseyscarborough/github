@@ -10,7 +10,7 @@ module GitHub
       def octocat(text=nil)
         options = {}
         options[:s] = text if text
-        get "/octocat", params: options
+        get "/octocat", :params => options
       end
 
     end

@@ -18,9 +18,9 @@ module GitHub
       #   GitHub.markdown('# Hello World! ## H2 **yeah**!')
       # @example
       #   GitHub.markdown('# GitHub', mode: 'gfm', context: 'caseyscarborough/github')
-      def markdown(text, options={mode: 'markdown'})
-        options.merge!(text: text)
-        post "/markdown", body: options
+      def markdown(text, options={:mode => 'markdown'})
+        options.merge!(:text => text)
+        post "/markdown", :body => options
       end
 
     end

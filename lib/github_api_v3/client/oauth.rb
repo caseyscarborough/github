@@ -55,7 +55,7 @@ module GitHub
       #     :client_secret => '9d667c2b7fae7a329f32b6df17926154'
       #   )
       def create_authorization(options={})
-        post "/authorizations", body: options
+        post "/authorizations", :body => options
       end
 
       # Update an existing authorization.
@@ -75,7 +75,7 @@ module GitHub
       #   client = GitHub.client(:login => 'username', :password => 'password')
       #   client.update_authorization(1324, :note => 'Updated authorization')
       def update_authorization(id, options={})
-        patch "/authorizations/#{id}", body: options
+        patch "/authorizations/#{id}", :body => options
       end
 
       # Delete an authorization

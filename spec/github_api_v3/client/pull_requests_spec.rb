@@ -19,7 +19,7 @@ describe GitHub::Client::PullRequests do
 
   describe '.update_pull_request', :vcr do
     it 'updates a pull request' do
-      pull = test_client.update_pull_request('api-test-organization','test-repo', 1, body: 'Test body update.')
+      pull = test_client.update_pull_request('api-test-organization','test-repo', 1, :body => 'Test body update.')
       pull.should be_instance_of Hash
       pull.body.should == 'Test body update.'
     end
@@ -75,10 +75,10 @@ describe GitHub::Client::PullRequests do
         'api-test-organization',
         'test-repo',
         3,
-        body: 'Very nice!',
-        commit_id: 'cbe5c38e993027322ea85c3c7e2596f1bb90fe8e',
-        path: 'README.md',
-        position: 5
+        :body => 'Very nice!',
+        :commit_id => 'cbe5c38e993027322ea85c3c7e2596f1bb90fe8e',
+        :path => 'README.md',
+        :position => 5
       )
       comment.should be_instance_of Hash
       comment_id = comment.id

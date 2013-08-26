@@ -56,7 +56,7 @@ module GitHub
       #     base: 'master'
       #   )
       def create_pull_request(owner, repo, options={})
-        post "/repos/#{owner}/#{repo}/pulls", body: options
+        post "/repos/#{owner}/#{repo}/pulls", :body => options
       end
 
       # Update a pull request.
@@ -73,7 +73,7 @@ module GitHub
       # @return [Hash] The pull request information.
       # @see http://developer.github.com/v3/pulls/#update-a-pull-request
       def update_pull_request(owner, repo, number, options={})
-        patch "/repos/#{owner}/#{repo}/pulls/#{number}", body: options
+        patch "/repos/#{owner}/#{repo}/pulls/#{number}", :body => options
       end
 
       # List commits on a pull request.
@@ -181,7 +181,7 @@ module GitHub
       #     position: 2
       #   )
       def create_pull_request_comment(owner, repo, number, options={})
-        post "/repos/#{owner}/#{repo}/pulls/#{number}/comments", body: options
+        post "/repos/#{owner}/#{repo}/pulls/#{number}/comments", :body => options
       end
 
       # Edit a pull request comment.
@@ -197,8 +197,8 @@ module GitHub
       # @example
       #   client.edit_pull_request_comment('caseyscarborough', 'github', 1242348, 'What up, girl?')
       def edit_pull_request_comment(owner, repo, number, body)
-        options = { body: body }
-        patch "/repos/#{owner}/#{repo}/pulls/comments/#{number}", body: options
+        options = { :body => body }
+        patch "/repos/#{owner}/#{repo}/pulls/comments/#{number}", :body => options
       end
 
       # Delete a pull request comment.

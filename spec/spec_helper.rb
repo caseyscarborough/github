@@ -51,9 +51,9 @@ def test_client_secret
 end
 
 def test_basic_client
-  GitHub::Client.new(login: test_login, password: test_password)
+  GitHub::Client.new(:login => test_login, :password => test_password)
 end
 
 def test_client
-  GitHub::Client.new(login: test_login, access_token: test_access_token)
+  GitHub::Client.new(:login => test_login, :access_token => test_access_token)
 end

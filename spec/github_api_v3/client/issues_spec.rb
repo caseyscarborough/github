@@ -80,7 +80,7 @@ describe GitHub::Client::Issues do
   end
 
   describe '.edit_issue', :vcr do
-    let(:response) { test_client.edit_issue('api-test-organization', 'test-repo', 3, body: 'Updated body.') }
+    let(:response) { test_client.edit_issue('api-test-organization', 'test-repo', 3, :body => 'Updated body.') }
 
     it 'returns the issue information' do
       response.should be_instance_of Hash

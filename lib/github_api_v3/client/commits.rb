@@ -19,7 +19,7 @@ module GitHub
       # @return [Array] A list of commits.
       # @see http://developer.github.com/v3/repos/commits/#list-commits-on-a-repository
       def commits(owner, repo, options={})
-        get "/repos/#{owner}/#{repo}/commits", params: options
+        get "/repos/#{owner}/#{repo}/commits", :params => options
       end
 
       # Get a single commit.

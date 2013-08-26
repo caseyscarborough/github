@@ -12,7 +12,7 @@ describe GitHub::Client::Orgs do
 
   describe '.edit_organization', :vcr do
     it 'returns an organization when successful' do
-      org = test_client.edit_organization('api-test-organization', name: 'API Test Organization')
+      org = test_client.edit_organization('api-test-organization', :name => 'API Test Organization')
       org.name.should == "API Test Organization"
       org.should be_instance_of Hash
     end

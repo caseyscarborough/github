@@ -67,7 +67,7 @@ module GitHub
       # @example
       #   client.create_repo('new-repo', description: 'New repository.', private: true)
       def create_repo(name, options={})
-        post "/user/repos", body: options.merge(name: name)
+        post "/user/repos", :body => options.merge(:name => name)
       end
 
       # Edit a repository.
@@ -91,7 +91,7 @@ module GitHub
       #   client.edit_repo('caseyscarborough','github', name: 'github', description: 'An awesome repository!')
       def edit_repo(owner, repo, options={})
         options[:name] = repo unless options[:name]
-        patch "/repos/#{owner}/#{repo}", body: options
+        patch "/repos/#{owner}/#{repo}", :body => options
       end
 
       # Delete a repository.
@@ -306,7 +306,7 @@ module GitHub
       def subscribe(owner, repo, options={})
         options[:subscribed] = true unless options[:subscribed]
         options[:ignored] = false unless options[:ignored]
-        put "/repos/#{owner}/#{repo}/subscription", body: options
+        put "/repos/#{owner}/#{repo}/subscription", :body => options
       end
 
       # Delete a repository subscription.

@@ -40,7 +40,7 @@ describe GitHub::Client::Repos do
 
   describe '.edit_repo', :vcr do
     it 'returns a hash' do
-      repo = test_client.edit_repo(test_client.login, '098f6bcd4621d373cade4e832627b4f6', description: 'An awesome repo!')
+      repo = test_client.edit_repo(test_client.login, '098f6bcd4621d373cade4e832627b4f6', :description => 'An awesome repo!')
       repo.should be_instance_of Hash
     end
 

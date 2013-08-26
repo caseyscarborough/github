@@ -22,7 +22,7 @@ module GitHub
       # @example
       #   client.issues(:filter => 'created', :state => 'closed', :sort => 'updated')
       def issues(options={})
-        get '/issues', params: options
+        get '/issues', :params => options
       end
 
       # List all issues across owned and member repositories for the authenticated user.
@@ -41,7 +41,7 @@ module GitHub
       # @example
       #   client.user_issues(:filter => 'created')
       def user_issues(options={})
-        get '/user/issues', params: options
+        get '/user/issues', :params => options
       end
 
       # List all issues for a given organization for the authenticated user.
@@ -61,7 +61,7 @@ module GitHub
       # @example
       #   client.org_issues('facebook', :filter => 'mentioned', :state => 'closed')
       def org_issues(org, options={})
-        get "/orgs/#{org}/issues", params: options
+        get "/orgs/#{org}/issues", :params => options
       end
 
       # List issues for a repository.
@@ -121,8 +121,8 @@ module GitHub
       # @example
       #   client.create_issue('caseyscarborough', 'github', 'Found a bug', :assignee => 'caseyscarborough', :labels => ['label1', 'label2', 'label3'])
       def create_issue(owner, repo, title, options={})
-        options.merge!(title: title)
-        post "/repos/#{owner}/#{repo}/issues", body: options
+        options.merge!(:title => title)
+        post "/repos/#{owner}/#{repo}/issues", :body => options
       end
 
       # Edit an issue.
@@ -144,7 +144,7 @@ module GitHub
       # @example
       #   client.edit_issue('caseyscarborough', 'github', 3, body: 'This is the body.', state: 'closed')
       def edit_issue(owner, repo, number, options={})
-        patch "/repos/#{owner}/#{repo}/issues/#{number}", body: options
+        patch "/repos/#{owner}/#{repo}/issues/#{number}", :body => options
       end
 
       # List comments on an issue.
@@ -188,7 +188,7 @@ module GitHub
       # @return [Hash] The comment information.
       # @see http://developer.github.com/v3/issues/comments/#create-a-comment
       def create_issue_comment(owner, repo, number, comment)
-        post "/repos/#{owner}/#{repo}/issues/#{number}/comments", body: { body: comment }
+        post "/repos/#{owner}/#{repo}/issues/#{number}/comments", :body => { :body => comment }
       end
 
       # Edit an issue comment.
@@ -200,7 +200,7 @@ module GitHub
       # @return [Hash] The comment information.
       # @see http://developer.github.com/v3/issues/comments/#edit-a-comment
       def edit_issue_comment(owner, repo, id, comment)
-        patch "/repos/#{owner}/#{repo}/issues/comments/#{id}", body: { body: comment }
+        patch "/repos/#{owner}/#{repo}/issues/comments/#{id}", :body => { :body => comment }
       end
 
       # Delete a comment.

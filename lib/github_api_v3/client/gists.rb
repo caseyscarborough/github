@@ -52,7 +52,7 @@ module GitHub
       #   client.create_gist(files: {"file1.txt" => { content: "File contents" }}, description: "Gist description", public: "false")
       def create_gist(files={}, options={:public => true})
         options.merge!(files)
-        post "/gists", body: options
+        post "/gists", :body => options
       end
 
       # Edit a gist
@@ -67,7 +67,7 @@ module GitHub
       # @return [Hash] Gist information.
       def edit_gist(id, files={}, options={:public => true})
         options.merge!(files)
-        patch "/gists/#{id}", body: options
+        patch "/gists/#{id}", :body => options
       end
 
       # Check if a gist is starred.
@@ -166,7 +166,7 @@ module GitHub
       # @example
       #   client.create_gist_comment(5928712, 'Awesome!')
       def create_gist_comment(id, comment)
-        post "/gists/#{id}/comments", body: { body: comment }
+        post "/gists/#{id}/comments", :body => { :body => comment }
       end
 
       # Edit an existing gist comment.
@@ -181,7 +181,7 @@ module GitHub
       # @example
       #   client.edit_gist_comment(5928712, 889239, 'Even more awesome!')
       def edit_gist_comment(id, comment_id, comment)
-        patch "/gists/#{id}/comments/#{comment_id}", body: { body: comment }
+        patch "/gists/#{id}/comments/#{comment_id}", :body => { :body => comment }
       end
 
       # Delete a gist comment.

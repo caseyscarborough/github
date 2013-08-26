@@ -61,10 +61,10 @@ describe GitHub::Client::Contents do
       test_client.update_file(
         'api-test-organization',
         'test-repo',
-        :path => filepath,
-        :message => 'Test file update using github_api_v3 gem.',
-        :content => 'This file is a test, and has now been updated.',
-        :sha => sha,
+        :path      => filepath,
+        :message   => 'Test file update using github_api_v3 gem.',
+        :content   => 'This file is a test, and has now been updated.',
+        :sha       => sha,
         :committer => { :name => 'Casey Scarborough', :email => 'caseyscarborough@gmail.com' }
       )
     }
@@ -84,9 +84,9 @@ describe GitHub::Client::Contents do
       response = test_client.delete_file(
         'api-test-organization',
         'test-repo',
-        :path => filepath,
-        :message => 'Delete testfile',
-        :sha => sha,
+        :path      => filepath,
+        :message   => 'Delete testfile',
+        :sha       => sha,
         :committer => { :name => 'Casey Scarborough', :email => 'casey@example.com' }
         )
       response.should be_instance_of Hash

@@ -166,7 +166,7 @@
       # @example
       #   client.create_key('octocat@octomac', 'ssh-rsa AAA...')
       def create_key(title, key)
-        post '/user/keys', body: {title: title, key: key}
+        post '/user/keys', :body => {:title => title, :key => key}
       end
 
       # Update a public key
@@ -181,7 +181,7 @@
       # @example
       #   client.update_key(1, 'octocat@octomac', 'ssh-rsa AAA...')
       def update_key(id, title, key)
-        patch "/user/keys/#{id}", body: {title: title, key: key}
+        patch "/user/keys/#{id}", :body => {:title => title, :key => key}
       end
 
       # Remove a public key from a user's account.
@@ -209,7 +209,7 @@
       # @example
       #   client.notifications
       def notifications(options={})
-        get "/notifications", params: options
+        get "/notifications", :params => options
       end
 
       # List notifications for a repository.

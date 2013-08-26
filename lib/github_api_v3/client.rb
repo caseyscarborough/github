@@ -105,14 +105,14 @@ module GitHub
       #
       # @return [Hash]
       def basic_params
-        @password.nil? ? {} : { login: @login, password: @password }
+        @password.nil? ? {} : { :login => @login, :password => @password }
       end
 
       # Return a hash with client's login and access token.
       #
       # @return [Hash]
       def auth_params
-        @login.nil? ? {} : { login: @login, access_token: @access_token }
+        @login.nil? ? {} : { :login => @login, :access_token => @access_token }
       end
 
       def basic_auth_headers
@@ -140,7 +140,7 @@ module GitHub
         params.merge!(auth_params)
         headers.merge!(basic_auth_headers) if @login && @password
 
-        self.class.send(method, url, query: params, body: body.to_json, headers: headers, no_follow: no_follow)
+        self.class.send(method, url, :query => params, :body => body.to_json, :headers => headers, :no_follow => no_follow)
       end
 
       # Get a boolean response from an HTTP request.

@@ -33,7 +33,7 @@ module GitHub
       # @example
       #   client.edit_organization('facebook',name:'faceeebooook',location:'California')
       def edit_organization(org, options={})
-        patch "/orgs/#{org}", body: options
+        patch "/orgs/#{org}", :body => options
       end
 
       # List all users who are members of an organization.
@@ -145,8 +145,8 @@ module GitHub
       # @return [Hash] Team information.
       # @see http://developer.github.com/v3/orgs/teams/#create-team
       def create_team(org, team_name, options={})
-        options.merge!(name: team_name)
-        post "/orgs/#{org}/teams", body: options
+        options.merge!(:name => team_name)
+        post "/orgs/#{org}/teams", :body => options
       end
 
       # Edit a team.
@@ -161,8 +161,8 @@ module GitHub
       # @return [Hash] Team information.
       # @see http://developer.github.com/v3/orgs/teams/#edit-team
       def edit_team(id, team_name, options={})
-        options.merge!(name: team_name)
-        patch "/teams/#{id}", body: options
+        options.merge!(:name => team_name)
+        patch "/teams/#{id}", :body => options
       end
 
       # Delete a team.

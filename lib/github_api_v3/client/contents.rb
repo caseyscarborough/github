@@ -19,7 +19,7 @@ module GitHub
       # @return [Hash] README information.
       # @see http://developer.github.com/v3/repos/contents/#get-the-readme
       def readme(owner, repo, ref='master')
-        get "/repos/#{owner}/#{repo}/readme", params: { ref: ref }
+        get "/repos/#{owner}/#{repo}/readme", :params => { :ref => ref }
       end
 
       # Get the contents of a file or directory.
@@ -31,7 +31,7 @@ module GitHub
       # @return [Array, Hash] An array of files if path is a folder, or a hash of file information if a file, symlink, or submodule is specified.
       # @see http://developer.github.com/v3/repos/contents/#get-contents
       def contents(owner, repo, path='', ref='master')
-        get "/repos/#{owner}/#{repo}/contents/#{path}", params: { ref: ref }
+        get "/repos/#{owner}/#{repo}/contents/#{path}", :params => { :ref => ref }
       end
 
       # Create a file in a repository.
@@ -60,7 +60,7 @@ module GitHub
       #   )
       def create_file(owner, repo, options={})
         options[:content] = Base64.strict_encode64(options[:content])
-        put "/repos/#{owner}/#{repo}/contents/#{options[:path]}", body: options
+        put "/repos/#{owner}/#{repo}/contents/#{options[:path]}", :body => options
       end
 
       # Update a file in a repository.
@@ -91,7 +91,7 @@ module GitHub
       #   )
       def update_file(owner, repo, options={})
         options[:content] = Base64.strict_encode64(options[:content])
-        put "/repos/#{owner}/#{repo}/contents/#{options[:path]}", body: options
+        put "/repos/#{owner}/#{repo}/contents/#{options[:path]}", :body => options
       end
       alias :edit_file :update_file
 
@@ -120,7 +120,7 @@ module GitHub
       #     :committer => { :name => 'Casey Scarborough', :email => 'casey@example.com' }
       #   )
       def delete_file(owner, repo, options={})
-        delete "/repos/#{owner}/#{repo}/contents/#{options[:path]}", body: options
+        delete "/repos/#{owner}/#{repo}/contents/#{options[:path]}", :body => options
       end
       alias :remove_file :delete_file
 
@@ -136,7 +136,7 @@ module GitHub
       #   GitHub.archive('caseyscarborough', 'github', 'tarball')
       #   # => "https://codeload.github.com/caseyscarborough/github/legacy.tar.gz/master"
       def archive(owner, repo, format='zipball', ref='master')
-        request :get, "/repos/#{owner}/#{repo}/#{format}/#{ref}", no_follow: true
+        request :get, "/repos/#{owner}/#{repo}/#{format}/#{ref}", :no_follow => true
       rescue HTTParty::RedirectionTooDeep => e
         e.response['location']
       end
