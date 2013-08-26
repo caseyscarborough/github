@@ -10,6 +10,7 @@ require 'github_api_v3/client/issues'
 require 'github_api_v3/client/markdown'
 require 'github_api_v3/client/milestones'
 require 'github_api_v3/client/oauth'
+require 'github_api_v3/client/octocat'
 require 'github_api_v3/client/orgs'
 require 'github_api_v3/client/pull_requests'
 require 'github_api_v3/client/repos'
@@ -38,6 +39,7 @@ module GitHub
     include GitHub::Client::Markdown
     include GitHub::Client::Milestones
     include GitHub::Client::OAuth
+    include GitHub::Client::Octocat
     include GitHub::Client::Orgs
     include GitHub::Client::PullRequests
     include GitHub::Client::Repos
