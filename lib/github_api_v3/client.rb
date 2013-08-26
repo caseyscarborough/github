@@ -1,6 +1,7 @@
 require 'base64'
 require 'json'
 require 'github_api_v3/client/commits'
+require 'github_api_v3/client/contents'
 require 'github_api_v3/client/events'
 require 'github_api_v3/client/feeds'
 require 'github_api_v3/client/gists'
@@ -28,6 +29,7 @@ module GitHub
     base_uri Default::API_ENDPOINT
 
     include GitHub::Client::Commits
+    include GitHub::Client::Contents
     include GitHub::Client::Events
     include GitHub::Client::Feeds
     include GitHub::Client::Gitignore
@@ -128,14 +130,15 @@ module GitHub
       # @example POST request
       #   request :post, 'http://example.com/users', params: { name: 'Casey' }, body: { example: 'example' }
       def request(method, url, options={})
-        params  = options[:params]  || {}
-        headers = options[:headers] || {}
-        body    = options[:body]    || {}
+        params    = options[:params]    || {}
+        headers   = options[:headers]   || {}
+        body      = options[:body]      || {}
+        no_follow = options[:no_follow] || false
 
         params.merge!(auth_params)
         headers.merge!(basic_auth_headers) if @login && @password
 
-        self.class.send(method, url, query: params, body: body.to_json, headers: headers)
+        self.class.send(method, url, query: params, body: body.to_json, headers: headers, no_follow: no_follow)
       end
 
       # Get a boolean response from an HTTP request.
@@ -174,7 +177,6 @@ module GitHub
             raise Forbidden
           end
         when 404 then raise NotFound
-        when 400...500 then raise ClientError
         when 500 then raise InternalServerError
         when 502 then raise BadGateway
         when 503 then raise ServiceUnavailable
