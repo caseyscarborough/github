@@ -1,6 +1,6 @@
 # GitHub API v3
 
-[![Gem Version](https://badge.fury.io/rb/github_api_v3.png)](http://badge.fury.io/rb/github_api_v3)
+[![Gem Version](https://badge.fury.io/rb/github_api_v3.png)](http://badge.fury.io/rb/github_api_v3) [![Code Climate](https://codeclimate.com/github/caseyscarborough/github.png)](https://codeclimate.com/github/caseyscarborough/github)
 
 This is a simple and easy to use wrapper for GitHub's v3 API. Knowing a little about [GitHub's API](http://developer.github.com/) will aid in its use, but is not necessary. Nearly all methods of the API have been implemented, but there are a few left to go.
 
