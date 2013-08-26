@@ -122,7 +122,7 @@ GitHub.all_repos
 GitHub.repo('owner','repo-name')
 
 # Create a new repository.
-client.create_repo('new-repo', description: 'New repository.', private: true)
+client.create_repo('new-repo', :description => 'New repository.', :private => true)
 
 # Delete a repository.
 client.delete_repo('repo-name')
@@ -197,7 +197,7 @@ GitHub.gist(1234567)
 # Create a new gist.
 client.create_gist(
   # Hash of files to include.
-  :files => { "file1.txt" => { content: "File contents" } }, 
+  :files => { "file1.txt" => { :content => "File contents" } }, 
   :description => "Gist description.", 
   :public => "false"
 )
@@ -247,7 +247,7 @@ GitHub.gitignore("Ruby")
 The Authorizations OAuth API requires that a user use _basic authentication_. This means that you'll need to instantiate a client using your username and password, as opposed to the username and access token. You'll then be able to use the Authorizations API methods on  that client. See below:
 
 ```ruby
-client = GitHub.client(login: 'username', password: 'password')
+client = GitHub.client(:login => 'username', :password => 'password')
 
 # List your authorizations.
 client.authorizations
@@ -358,6 +358,15 @@ GitHub.octocat
 # Or create your own wisdom.
 GitHub.octocat('Wisdom.')
 ```
+
+## Supported Ruby Versions
+
+Currently these are the supported Ruby versions:
+
+* Ruby 1.9.2
+* Ruby 1.9.3
+* Ruby 2.0.0
+
 ## To Do
 
 Any functionality of the API listed at [developer.github.com](http://developer.github.com/) that hasn't currently been implemented.
@@ -369,6 +378,8 @@ Some main missing functionality:
   * Keys
   * Downloads
   * etc.
+
+* Add support for Ruby 1.8.7.
 
 ## Contributing
 
